@@ -23,6 +23,7 @@ class Discord:
         url = utility.get_connection_url(self.token)
         self.socket = websocket.Websocket()
         self.socket.connect(f'{url}/?v=6&encoding=json')
+        self.event_loop()
 
     def heartbeat(self):
         self.ticks_since_hb +=1
