@@ -27,6 +27,8 @@ class Discord:
         # consume hello message
         hello = json.loads(self.socket.recv())
         self.heartbeat_interval = hello["d"]["heartbeat_interval"]
+        
+        self.event_loop()
 
     def heartbeat(self):
         self.ticks_since_hb +=1
