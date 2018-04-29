@@ -30,6 +30,8 @@ class Discord:
         self.heartbeat_interval = hello["d"]["heartbeat_interval"]
         print('Heartbeat interval: {}ms'.format(self.heartbeat_interval))
         
+        self.send(msg_builder.identify(self.token))
+
         self.event_loop()
 
     def heartbeat(self):
