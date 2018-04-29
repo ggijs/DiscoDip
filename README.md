@@ -1,0 +1,2 @@
+# DiscoLib
+Discord bot library 
