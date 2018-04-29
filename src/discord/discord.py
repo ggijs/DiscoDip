@@ -5,6 +5,7 @@ import time
 import websocket
 
 import discord.utility as utility
+import discord.data.guild as guild
 
 class Discord:
 
@@ -31,7 +32,6 @@ class Discord:
         print('Heartbeat interval: {}ms'.format(self.heartbeat_interval))
         
         self.send(msg_builder.identify(self.token))
-
         self.event_loop()
 
     def heartbeat(self):
@@ -52,8 +52,13 @@ class Discord:
             self.socket.send(message)
 
     def dispatch(self, message):
-        print('***********************\n***********************')
-        print(message)
+        data = json.loads(message)
+        if data["op"] == 0:
+            if data["t"] == 'GUILD_CREATE':
+                gld = guild.Guild(data["d"])
+                print(gld)
+                return
+        print('\n', message)
 
     def event_loop(self):
         start = time.time()
