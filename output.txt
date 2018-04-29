@@ -1,0 +1,436 @@
+$ python test.py
+Heartbeat interval: 41250ms
+
+ {"t":"READY","s":1,"op":0,"d":{"v":6,"user_settings":{},"user":{"verified":true,"username":"Alberto","mfa_enabled":false,"id":"439799408595435520","email":null,"discriminator":"4953","bot":true,"avatar":null},"session_id":"97d8fd91d4b7a
+fcf99bfc4e13121378d","relationships":[],"private_channels":[],"presences":[],"guilds":[{"unavailable":true,"id":"431111688037597195"}],"_trace":["gateway-prd-main-vxkk","discord-sessions-prd-1-3"]}}
+GUILD CREATE JWZ!!!
+    id : 431111688037597195
+    name : Best At Mediocre Discord
+    icon : d0abef30ae51c6415ffc0c0eafc2b126
+    splash : None
+    owner_id : 153511530284056576
+    region : eu-central
+    afk_timeout : 300
+    verification_level : 0
+    default_message_notifications : 0
+    explicit_content_filter : 0
+    Roles:
+        id : 431111688037597195
+        name : @everyone
+        color : 0
+        hoist : False
+        position : 0
+        permissions : 104320065
+        managed : False
+        mentionable : False
+
+        id : 431164012097568770
+        name : Broodje Frikadel
+        color : 15277667
+        hoist : True
+        position : 5
+        permissions : 2146958591
+        managed : False
+        mentionable : True
+
+        id : 431165983881953310
+        name : Bammetje
+        color : 3447003
+        hoist : True
+        position : 2
+        permissions : 104320065
+        managed : False
+        mentionable : True
+
+        id : 431506178808217612
+        name : Superbam
+        color : 2750218
+        hoist : True
+        position : 4
+        permissions : 104324163
+        managed : False
+        mentionable : True
+
+        id : 431511003881144340
+        name : Ruimschoots Hoofd
+        color : 10181046
+        hoist : True
+        position : 3
+        permissions : 104324161
+        managed : False
+        mentionable : True
+
+        id : 432175480104550431
+        name : MagikMan
+        color : 1752220
+        hoist : True
+        position : 1
+        permissions : 8
+        managed : True
+        mentionable : False
+
+    mfa_level : 0
+    system_channel_id : 431111688037597197
+    owner : None
+    permissions : None
+    afk_channel_id : None
+    embed_enabled : None
+    embed_channel_id : None
+    application_id : None
+    widget_enabled : None
+    widget_channel_id : None
+    joined_at : 2018-04-28T14:46:29.700530+00:00
+    large : False
+    unavailable : False
+    member_count : 22
+    Members:
+        id : 133649947127054337
+        username : Agalloch
+        discriminator : 1523
+        avatar : e0a923d041acc63b906545d470c4b0f3
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+        joined_at : 2018-04-11T18:08:33.537960+00:00
+        deaf : False
+        mute : False
+
+        id : 153511530284056576
+        username : nohow
+        discriminator : 4133
+        avatar : 2767fa55d538c48c9ee8006879c9d5a1
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : Koen
+        Roles:
+            Bammetje
+        joined_at : 2018-04-04T17:19:57.158000+00:00
+        deaf : False
+        mute : False
+
+        id : 186944876196134912
+        username : Wavycolt
+        discriminator : 7327
+        avatar : e0f3cc2cdc4c0b32854c34a04cf4cc96
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Broodje Frikadel
+            Bammetje
+        joined_at : 2018-04-04T15:23:56.146000+00:00
+        deaf : False
+        mute : False
+
+        id : 186947454032150530
+        username : Lyanden
+        discriminator : 8355
+        avatar : 894a56c4941431080059023ca055f613
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-07T19:18:49.589693+00:00
+        deaf : False
+        mute : False
+
+        id : 202119009791901697
+        username : Kwarkbakje/Robert
+        discriminator : 3769
+        avatar : None
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+            Ruimschoots Hoofd
+        joined_at : 2018-04-04T17:58:25.135000+00:00
+        deaf : False
+        mute : False
+
+        id : 203148444380954624
+        username : finalmichiel
+        discriminator : 2089
+        avatar : 13b20d4b4adb1c586bfadaaefe81269a
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-05T17:08:04.325000+00:00
+        deaf : False
+        mute : False
+
+        id : 230748265228926976
+        username : Woundrak / Wouter
+        discriminator : 9839
+        avatar : cf04e230ad561fda13ddbc6cbb16806d
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-04T16:52:37.452000+00:00
+        deaf : False
+        mute : False
+
+        id : 262694147536715789
+        username : KhanOfSoda
+        discriminator : 2638
+        avatar : 1fc84a5f033f8786d61f0c414825f20a
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : Khan / JW
+        Roles:
+            Bammetje
+        joined_at : 2018-04-04T18:48:49.044000+00:00
+        deaf : False
+        mute : False
+
+        id : 305352654115045376
+        username : XeroFox
+        discriminator : 9946
+        avatar : None
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+        joined_at : 2018-04-23T13:53:04.767083+00:00
+        deaf : False
+        mute : False
+
+        id : 314433821049356290
+        username : Binny
+        discriminator : 0812
+        avatar : None
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-19T19:11:54.405796+00:00
+        deaf : False
+        mute : False
+
+        id : 321613328155934731
+        username : flokkiej
+        discriminator : 5776
+        avatar : b90826f94454de30a1ec8157dba8158f
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-05T17:40:37.318000+00:00
+        deaf : False
+        mute : False
+
+        id : 342446113988804608
+        username : Hosselhof
+        discriminator : 3513
+        avatar : 15f8339c956ed366ff452f00b15de560
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-08T10:10:06.319724+00:00
+        deaf : False
+        mute : False
+
+        id : 406073709879885831
+        username : ⚜ N!ls / K!N9 ⚜
+        discriminator : 9602
+        avatar : d82acb2c97f1e193da93e1bd1335510e
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-04T15:25:35.823000+00:00
+        deaf : False
+        mute : False
+
+        id : 418868110251130883
+        username : Surreal
+        discriminator : 7572
+        avatar : 03ece24edb915e73cde24faeb5d26b7b
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-17T17:25:14.939681+00:00
+        deaf : False
+        mute : False
+
+        id : 420190278671007744
+        username : bRamZes
+        discriminator : 1396
+        avatar : b1c3061ce381455c0748a5ea36a2f264
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-21T11:46:09.309448+00:00
+        deaf : False
+        mute : False
+
+        id : 431156323934142480
+        username : Boerenkool
+        discriminator : 8539
+        avatar : None
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+            Superbam
+        joined_at : 2018-04-04T18:30:35.549000+00:00
+        deaf : False
+        mute : False
+
+        id : 432173429446410243
+        username : MagikMan
+        discriminator : 8140
+        avatar : e836eef8215aa0fdcbc3f0a3b56733d5
+        bot : True
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : Akseli Laakso
+        Roles:
+            MagikMan
+        joined_at : 2018-04-07T13:51:03.955605+00:00
+        deaf : False
+        mute : False
+
+        id : 432289577848537088
+        username : SirPsychoSexy01
+        discriminator : 0218
+        avatar : None
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : SirPsychoSexy01 / Ludo
+        Roles:
+            Bammetje
+        joined_at : 2018-04-07T21:26:40.089481+00:00
+        deaf : False
+        mute : False
+
+        id : 438813121482588180
+        username : ShomerShabbes
+        discriminator : 2669
+        avatar : None
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+        joined_at : 2018-04-25T21:27:15.851438+00:00
+        deaf : False
+        mute : False
+
+        id : 439516495425568788
+        username : naamlooss
+        discriminator : 9968
+        avatar : 38340851abbe4b4a3f322f7f30368b9c
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-27T20:14:19.894037+00:00
+        deaf : False
+        mute : False
+
+        id : 439743284395507723
+        username : thescorpi0n
+        discriminator : 5942
+        avatar : None
+        bot : None
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+            Bammetje
+        joined_at : 2018-04-28T11:03:31.212893+00:00
+        deaf : False
+        mute : False
+
+        id : 439799408595435520
+        username : Alberto
+        discriminator : 4953
+        avatar : None
+        bot : True
+        mfa_enabled : None
+        verified : None
+        email : None
+        guild : <discord.data.guild.Guild object at 0x067CB570>
+        nickname : None
+        Roles:
+        joined_at : 2018-04-28T14:46:29.700530+00:00
+        deaf : False
+        mute : False
