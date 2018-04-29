@@ -23,12 +23,12 @@ class Discord:
     def connect(self):
         url = utility.get_connection_url(self.token)["url"]
         self.socket = websocket.WebSocket()
-        self.socket.connect(f'{url}/?v=6&encoding=json')
+        self.socket.connect('{}/?v=6&encoding=json'.format(url))
         
         # consume hello message
         hello = json.loads(self.socket.recv())
         self.heartbeat_interval = hello["d"]["heartbeat_interval"]
-        print(f'Heartbeat interval: {self.heartbeat_interval}ms')
+        print('Heartbeat interval: {}ms'.format(self.heartbeat_interval))
         
         self.event_loop()
 
@@ -41,7 +41,7 @@ class Discord:
             'd':self.sequence
             }
             self.send(json.dumps(msg))
-            self.tick_since_hb = 0
+            self.ticks_since_hb = 0
             self.heartbeat_response = False
 
 
@@ -68,7 +68,7 @@ class Discord:
             worktime = time.time() - start
             start += self.tickspeed
             if(worktime > self.tickspeed):
-                print(f'Warning! event loop is not keeping up, last update took {worktime}S.')
+                print('Warning! event loop is not keeping up, last update took {}S.'.format(worktime))
                 continue
             time.sleep(self.tickspeed - worktime)
 
