@@ -6,6 +6,7 @@ import websocket
 
 import discord.utility as utility
 import discord.data.guild as guild
+import discord.msg_builder as msg_builder
 
 class Discord:
 
