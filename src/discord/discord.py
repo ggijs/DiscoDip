@@ -1,9 +1,10 @@
 import json
 import select
+import threading
 import time
 import websocket
 
-import utility
+import discord.utility as utility
 
 class Discord:
 
@@ -11,7 +12,7 @@ class Discord:
         self.guilds = {}
         self.heartbeat_interval = None
         self.heartbeat_response = False
-        self.socket_lock = None
+        self.socket_lock = threading.Lock()
         self.modules = []
         self.sequence = None
         self.socket = None
@@ -20,19 +21,20 @@ class Discord:
         self.tickspeed = 0.1 # every 100ms
 
     def connect(self):
-        url = utility.get_connection_url(self.token)
-        self.socket = websocket.Websocket()
+        url = utility.get_connection_url(self.token)["url"]
+        self.socket = websocket.WebSocket()
         self.socket.connect(f'{url}/?v=6&encoding=json')
         
         # consume hello message
         hello = json.loads(self.socket.recv())
         self.heartbeat_interval = hello["d"]["heartbeat_interval"]
+        print(f'Heartbeat interval: {self.heartbeat_interval}ms')
         
         self.event_loop()
 
     def heartbeat(self):
-        self.ticks_since_hb +=1
-        if self.ticks_since_hb*100 >= self.heartbeat_interval:
+        self.ticks_since_hb += 1
+        if self.ticks_since_hb * 100 >= self.heartbeat_interval:
             # TODO: no heart_Ack -> connection error.
             msg = {
             'op': 1,
@@ -52,23 +54,23 @@ class Discord:
         print(message)
 
     def event_loop(self):
-        time_start = time.time()
+        start = time.time()
 
         while True:
             self.heartbeat()
 
-        while self.pending_data():
-            self.dispatch(self.socket.recv())
+            while self.pending_data():
+                self.dispatch(self.socket.recv())
 
-        for m in self.modules:
-            m.update()
+            for m in self.modules:
+                m.update()
 
-        worktime = time.time() - start
-        start += self.tickspeed
-        if(worktime > self.tickspeed):
-            print(f'Warning! event loop is not keeping up, last update took {worktime}S.')
-            continue
-        time.sleep(self.tickspeed - worktime)
+            worktime = time.time() - start
+            start += self.tickspeed
+            if(worktime > self.tickspeed):
+                print(f'Warning! event loop is not keeping up, last update took {worktime}S.')
+                continue
+            time.sleep(self.tickspeed - worktime)
 
     def peel(self, message):
         self.sequence = message["s"]
