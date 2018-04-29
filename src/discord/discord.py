@@ -5,6 +5,7 @@ import time
 import websocket
 
 import discord.utility as utility
+import discord.msg_builder as msg_builder
 
 class Discord:
 
