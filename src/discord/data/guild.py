@@ -1,3 +1,4 @@
+import discord.data.channel as channel
 import discord.data.member as member
 import discord.data.role as role
 import discord.utility as u
@@ -60,6 +61,13 @@ class Guild:
                 self.members[obj.id] = obj
         
         #PARSE CHANNELS
+        self.channels = {}
+        chanlist = u.get_safe(event, "channels")
+        if(chanlist):
+            for chan in chanlist:
+                obj = channel.Channel(chan)
+                self.channels[obj.id] = obj
+
         #PARSE PRESENCES
 
     '''
@@ -86,6 +94,10 @@ class Guild:
                 msg += ('    ' * indent) + 'Members:\r\n'
                 for m in self.members.values():
                     msg += m.__str__(indent + 1) + '\r\n'
+            elif key == 'channels':
+                msg += ('    ' * indent) + 'Channels:\r\n'
+                for c in self.channels.values():
+                    msg += c.__str__(indent + 1) + '\r\n'
             else:
                 msg += ('    ' * indent) + '{} : {}\r\n'.format(key, value)
         return msg

@@ -23,3 +23,4 @@ class chat_channel():
         self.application_id = u.get_safe(channel, "application_id")
         self.parent_id = u.get_safe(channel, "parent_id")
         self.last_pin_timestamp = u.get_safe(channel, "last_pin_timestamp")
+
