@@ -1,4 +1,4 @@
-import user
+import discord.data.user as user
 import discord.utility as u
 
 class Emoji():
@@ -21,22 +21,9 @@ class Emoji():
     def __str__(self, indent = 0):
         msg = ''
         for key,value in self.__dict__.items():
-            msg += ('    ' *indent) + str(key) + " : " + str(value) + '\r\n'
-
-eex = {
-  "id": "41771983429993937",
-  "name": "LUL",
-  "roles": [ "41771983429993000", "41771983429993111" ],
-  "user": {
-    "username": "Luigi",
-    "discriminator": "0002",
-    "id": "96008815106887111",
-    "avatar": "5500909a3274e1812beb4e8de6631111"
-  },
-  "require_colons": true,
-  "managed": false,
-  "animated": false
-}
-
-flut = Emoji(eex)
-print flut
+            if key == "user":
+                msg += "user: \r\n"
+                msg += self.user.__str__(indent + 1) + '\r'
+            else:
+                msg += ('    ' *indent) + str(key) + " : " + str(value) + '\r\n'
+        return msg
