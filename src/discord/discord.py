@@ -58,7 +58,7 @@ class Discord:
             if data["t"] == 'GUILD_CREATE':
                 print('GUILD CREATE JWZ!!!')
                 gld = guild.Guild(data["d"])
-                print(gld.to_string(1))
+                print(gld)
                 return
         print('\n', message)
 

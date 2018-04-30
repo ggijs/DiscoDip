@@ -69,24 +69,23 @@ class Guild:
         if id in self.roles:
             return self.roles[id]
         
-        print('ID NOT IN ROLES...')
+        print('ERROR: ID NOT IN ROLES...')
         return None
 
     '''
         to_string with indent formatting for debug output.
     '''
-    def to_string(self, indent = 0):
+    def __str__(self, indent = 0):
         msg = ''
         for key, value in self.__dict__.items():
             if key == 'roles':
                 msg += ('    ' * indent) + 'Roles:\r\n'
                 for r in self.roles.values():
-                    msg += r.to_string(indent + 1) + '\r\n'
+                    msg += r.__str__(indent + 1) + '\r\n'
             elif key == 'members':
                 msg += ('    ' * indent) + 'Members:\r\n'
                 for m in self.members.values():
-                    msg += m.to_string(indent + 1) + '\r\n'
+                    msg += m.__str__(indent + 1) + '\r\n'
             else:
                 msg += ('    ' * indent) + '{} : {}\r\n'.format(key, value)
-        
         return msg

@@ -19,7 +19,7 @@ class Member(user.User):
         self.deaf = data["deaf"]
         self.mute = data["mute"]
 
-    def to_string(self, indent = 0):
+    def __str__(self, indent = 0):
         msg = ''
         for key, value in self.__dict__.items():
             if key == 'roles':

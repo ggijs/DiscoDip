@@ -16,7 +16,7 @@ class User:
         self.verified = u.get_safe(data, "verified")
         self.email = u.get_safe(data, "email")
     
-    def to_string(self, indent = 0):
+    def __str__(self, indent = 0):
         msg = ''
         for key, value in self.__dict__.items():
             msg += ('    ' * indent) + '{} : {}\r\n'.format(key, value)
