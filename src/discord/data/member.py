@@ -26,6 +26,8 @@ class Member(user.User):
                 msg += ('    ' * indent) + 'Roles:\r\n'
                 for r in self.roles:
                     msg += ('    ' * (indent + 1)) + r.name + '\r\n'
+            if key == 'guild':
+                msg += ('    ' * indent) + 'guild: ' + value.name + '\r\n'
             else: 
                 msg += ('    ' * indent) + '{} : {}\r\n'.format(key, value)
         return msg

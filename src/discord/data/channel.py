@@ -28,4 +28,5 @@ class Channel():
     def __str__(self, indent = 0):
         msg = ''
         for key, value in self.__dict__.items():
-            msg += ('    ' *indent) + str(key) " : " str(value)
+            msg += ('    ' *indent) + str(key) + " : " + str(value) + '\r\n'
+        return msg

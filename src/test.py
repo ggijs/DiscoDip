@@ -1,5 +1,5 @@
 from discord import *
-import tokenfile as tokens
+import logintoken as tokens
 
 connection = discord.Discord(tokens.get_token())
 connection.connect()
