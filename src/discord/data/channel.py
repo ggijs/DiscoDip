@@ -1,6 +1,6 @@
 import discord.utility as u
 
-class chat_channel():
+class Channel():
     
     def __init__(self, channel):
         #Guaranteed
@@ -24,3 +24,8 @@ class chat_channel():
         self.parent_id = u.get_safe(channel, "parent_id")
         self.last_pin_timestamp = u.get_safe(channel, "last_pin_timestamp")
 
+
+    def __str__(self, indent = 0):
+        msg = ''
+        for key, value in self.__dict__.items():
+            msg += ('    ' *indent) + str(key) " : " str(value)
