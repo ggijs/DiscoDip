@@ -3,7 +3,10 @@ import discord.events.parser_helpers as ph
 
 switch_dict
 {
+    'HELLO'                         : None
     'READY'                         : ph.ready_event,
+    'RESUMED'                       : None
+    'INVALID_SESSION'               : None
     'CHANNEL_CREATE'                : ph.channel_create_event,
     'CHANNEL_UPDATE'                : ph.channel_update_event,
     'CHANNEL_DELETE'                : ph.channel_delete_event,
@@ -39,5 +42,5 @@ switch_dict
 
 # dispatch of event parse
 def parse_event(event):
-    pass
+    switch_dict[event["t"]](event["d"])
 

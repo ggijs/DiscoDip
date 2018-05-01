@@ -4,10 +4,18 @@ def ready_event(event):
 
 # parses the channel create event
 def channel_create_event(event):
+    for m in modules:
+        m.channel_created(channel)
     pass
 
 # parses the channel update event
 def channel_update_event(event):
+    old = discord.get_chan(id).copy()
+    new = merge(old, new)
+    
+    for m in modules:
+        m.channel_updated(old, new)
+
     pass
 
 # parses the channel delete event
