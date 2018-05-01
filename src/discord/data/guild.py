@@ -1,4 +1,5 @@
 import discord.data.channel as channel
+import discord.data.emoji as emoji
 import discord.data.member as member
 import discord.data.role as role
 import discord.utility as u
@@ -31,6 +32,11 @@ class Guild:
             self.roles[obj.id] = obj
 
         # PARSE EMOJI's
+        self.emojis = {}
+        for em in event["emojis"]:
+            obj = emoji.Emoji(em)
+            self.emojis[obj.id] = obj
+
         # PARSE FEATURES
 
         self.mfa_level = event["mfa_level"]
@@ -98,6 +104,10 @@ class Guild:
                 msg += ('    ' * indent) + 'Channels:\r\n'
                 for c in self.channels.values():
                     msg += c.__str__(indent + 1) + '\r\n'
+            elif key == 'emojis':
+                msg += ('    ' * indent) + 'Emojis:\r\n'
+                for e in self.emojis.values():
+                    msg += e.__str__(indent + 1) + '\r\n'
             else:
                 msg += ('    ' * indent) + '{} : {}\r\n'.format(key, value)
         return msg

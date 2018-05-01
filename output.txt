@@ -1,6 +1,3 @@
- {"t":"READY","s":1,"op":0,"d":{"v":6,"user_settings":{},"user":{"verified":true,"username":"MagikMan","mfa_enabled":false,"id":"432173429446410243","email":n
-ull,"discriminator":"8140","bot":true,"avatar":"4bc8d124f5f285cef01cb7d3bd239d18"},"session_id":"b711ac62ed2f059753f73576757ef03c","relationships":[],"private
-_channels":[],"presences":[],"guilds":[{"unavailable":true,"id":"431111688037597195"}],"_trace":["gateway-prd-main-2840","discord-sessions-prd-1-7"]}}
 GUILD CREATE JWZ!!!
 id : 431111688037597195
 name : Best At Mediocre Discord
@@ -67,6 +64,119 @@ Roles:
     managed : True
     mentionable : False
 
+Emojis:
+    id : 432846937088327680
+    name : czgrn
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436472564076773386
+    name : bred
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436475730776555521
+    name : mc
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436476665418481664
+    name : kappa
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436477877593309185
+    name : czred
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436477915849293834
+    name : czpurp
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436477955871342593
+    name : czorng
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436478003527024640
+    name : czyel
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436478031889170451
+    name : czblue
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436478735189803021
+    name : csgo
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436479906067513345
+    name : pride
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436480387364028416
+    name : dink
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436480436399505408
+    name : pen
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436480601894420480
+    name : ak47
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436482371458695168
+    name : salt
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
+    id : 436567530006642688
+    name : czgrey
+    roles : []
+    require_colons : True
+    managed : False
+    animated : False
+
 mfa_level : 0
 system_channel_id : 431111688037597197
 owner : None
@@ -93,7 +203,6 @@ Members:
     guild: Best At Mediocre Discord
     nickname : None
     Roles:
-    roles : []
     joined_at : 2018-04-11T18:08:33.537960+00:00
     deaf : False
     mute : False
@@ -110,7 +219,6 @@ Members:
     nickname : Koen
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-04T17:19:57.158000+00:00
     deaf : False
     mute : False
@@ -128,7 +236,6 @@ Members:
     Roles:
         Broodje Frikadel
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27D0>, <discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-04T15:23:56.146000+00:00
     deaf : False
     mute : False
@@ -145,7 +252,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-07T19:18:49.589693+00:00
     deaf : False
     mute : False
@@ -163,7 +269,6 @@ Members:
     Roles:
         Bammetje
         Ruimschoots Hoofd
-    roles : [<discord.data.role.Role object at 0x060D27F0>, <discord.data.role.Role object at 0x060D2830>]
     joined_at : 2018-04-04T17:58:25.135000+00:00
     deaf : False
     mute : False
@@ -180,7 +285,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-05T17:08:04.325000+00:00
     deaf : False
     mute : False
@@ -197,7 +301,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-04T16:52:37.452000+00:00
     deaf : False
     mute : False
@@ -214,7 +317,6 @@ Members:
     nickname : Khan / JW
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-04T18:48:49.044000+00:00
     deaf : False
     mute : False
@@ -230,7 +332,6 @@ Members:
     guild: Best At Mediocre Discord
     nickname : None
     Roles:
-    roles : []
     joined_at : 2018-04-23T13:53:04.767083+00:00
     deaf : False
     mute : False
@@ -247,7 +348,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-19T19:11:54.405796+00:00
     deaf : False
     mute : False
@@ -264,7 +364,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-05T17:40:37.318000+00:00
     deaf : False
     mute : False
@@ -281,7 +380,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-08T10:10:06.319724+00:00
     deaf : False
     mute : False
@@ -298,7 +396,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-04T15:25:35.823000+00:00
     deaf : False
     mute : False
@@ -315,7 +412,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-17T17:25:14.939681+00:00
     deaf : False
     mute : False
@@ -332,7 +428,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-21T11:46:09.309448+00:00
     deaf : False
     mute : False
@@ -350,7 +445,6 @@ Members:
     Roles:
         Bammetje
         Superbam
-    roles : [<discord.data.role.Role object at 0x060D27F0>, <discord.data.role.Role object at 0x060D2810>]
     joined_at : 2018-04-04T18:30:35.549000+00:00
     deaf : False
     mute : False
@@ -358,16 +452,15 @@ Members:
     id : 432173429446410243
     username : MagikMan
     discriminator : 8140
-    avatar : 4bc8d124f5f285cef01cb7d3bd239d18
+    avatar : 79ee6b02c120851ec6734cf25e7a772b
     bot : True
     mfa_enabled : None
     verified : None
     email : None
     guild: Best At Mediocre Discord
-    nickname : Arlene Young
+    nickname : Charlie Otto
     Roles:
         MagikMan
-    roles : [<discord.data.role.Role object at 0x060D2850>]
     joined_at : 2018-04-07T13:51:03.955605+00:00
     deaf : False
     mute : False
@@ -384,7 +477,6 @@ Members:
     nickname : SirPsychoSexy01 / Ludo
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-07T21:26:40.089481+00:00
     deaf : False
     mute : False
@@ -400,7 +492,6 @@ Members:
     guild: Best At Mediocre Discord
     nickname : None
     Roles:
-    roles : []
     joined_at : 2018-04-25T21:27:15.851438+00:00
     deaf : False
     mute : False
@@ -417,7 +508,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-27T20:14:19.894037+00:00
     deaf : False
     mute : False
@@ -434,7 +524,6 @@ Members:
     nickname : None
     Roles:
         Bammetje
-    roles : [<discord.data.role.Role object at 0x060D27F0>]
     joined_at : 2018-04-28T11:03:31.212893+00:00
     deaf : False
     mute : False
@@ -450,7 +539,6 @@ Members:
     guild: Best At Mediocre Discord
     nickname : None
     Roles:
-    roles : []
     joined_at : 2018-04-28T14:46:29.700530+00:00
     deaf : False
     mute : False
@@ -608,7 +696,7 @@ Channels:
     name : de-dankste-memes
     topic : None
     nsfw : False
-    last_message_id : 440459712379617295
+    last_message_id : 440583413305442304
     bitrate : None
     user_limit : None
     recipients : None
@@ -662,7 +750,7 @@ Channels:
     name : botspam
     topic : None
     nsfw : False
-    last_message_id : 440554689734377472
+    last_message_id : 440811454824972288
     bitrate : None
     user_limit : None
     recipients : None
@@ -680,7 +768,7 @@ Channels:
     name : e-sports
     topic : None
     nsfw : False
-    last_message_id : 437559124902019072
+    last_message_id : 440817613438713858
     bitrate : None
     user_limit : None
     recipients : None
@@ -707,3 +795,4 @@ Channels:
     application_id : None
     parent_id : 431111688037597198
     last_pin_timestamp : None
+

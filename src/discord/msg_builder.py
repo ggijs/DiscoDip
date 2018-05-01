@@ -29,7 +29,7 @@ def identify(token):
       	"presence": {
             "since": None,
             "game": {
-            "name": "Hello Kitty's Murderous adventure.",
+            "name": "HuniePop",
             "type": 0
             },
             "status": "online",
