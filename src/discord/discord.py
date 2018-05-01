@@ -58,7 +58,7 @@ class Discord:
                 print('parsed guild named {}'.format(gld.name))
                 return
             if t == 'READY':
-                pass
+                self._connection.session_id = data["session_id"]
                 
                 return
         print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, data))
