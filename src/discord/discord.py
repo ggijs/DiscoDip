@@ -7,6 +7,7 @@ import websocket
 import discord.connection as connection
 import discord.utility as utility
 import discord.data.guild as guild
+import discord.data.manager as manager
 import discord.msg_builder as msg_builder
 
 class Discord:
@@ -52,10 +53,10 @@ class Discord:
     def _dispatch(self, op, t, data):
         if op == 0:
             if t == 'GUILD_CREATE':
-                gld = guild.Guild(data)
-                self.guilds[gld.id] = gld
+                manager.update_guild(self, data)
 
-                print('parsed guild named {}'.format(gld.name))
+                
+                
                 return
             if t == 'READY':
                 self._connection.session_id = data["session_id"]

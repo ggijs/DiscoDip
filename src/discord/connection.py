@@ -17,7 +17,7 @@ class Connection():
         self.token = token
         self.ticks_since_hb = 0
         self.heartbeat_interval = None
-        self.heartbeat_response = False
+        self.heartbeat_response = True
         self.session_id = None
 
     #########################
@@ -43,7 +43,11 @@ class Connection():
         self._heartbeat()
 
         while self._pending_data():
-            self._pre_dispatch(self.socket.recv())
+            data = self.socket.recv()
+            if data == "":
+                print('Received empty string')
+            else: 
+                self._pre_dispatch(data)
 
     #########################
     ##      INTERNALS      ##
@@ -54,6 +58,7 @@ class Connection():
         if event["s"] and event["s"] > self.sequence:
             self.sequence = event["s"]
         if event["op"] == 11:
+            print('heartbeat ACK:', event)
             self.heartbeat_response = True
         else:
             self.dispatch(event["op"], event["t"], event["d"])
@@ -64,11 +69,9 @@ class Connection():
             if not self.heartbeat_response:
                 self._resume()
             else:
-                msg = {
-                    'op': 1,
-                    'd':self.sequence
-                }
-                self._send(json.dumps(msg))
+                msg = msg_builder.heartbeat(self.sequence)
+                print(msg)
+                self._send(msg)
             
             self.ticks_since_hb = 0
             self.heartbeat_response = False

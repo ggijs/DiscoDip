@@ -2,31 +2,37 @@ import discord.utility as u
 
 class Channel():
     
-    def __init__(self, channel):
+    def __init__(self):
         #Guaranteed
-        self.id = channel["id"]
-        self.type = channel["type"]
+        self.id = None
+        self.type = None
+        self.permission_overwrites = []
+        self.recipients = []
 
         #Optional
-        self.guild_id = u.get_safe(channel, "guild_id")
-        self.position = u.get_safe(channel, "position")
-        self.permission_overwrites = u.get_safe(channel, "permission_overwrites")
-        self.name = u.get_safe(channel, "name")
-        self.topic = u.get_safe(channel, "topic")
-        self.nsfw = u.get_safe(channel, "nsfw")
-        self.last_message_id = u.get_safe(channel, "last_message_id")
-        self.bitrate = u.get_safe(channel, "bitrate")
-        self.user_limit = u.get_safe(channel, "user_limit")
-        self.recipients = u.get_safe(channel, "recipients")
-        self.icon = u.get_safe(channel, "icon")
-        self.owner_id = u.get_safe(channel, "owner_id")
-        self.application_id = u.get_safe(channel, "application_id")
-        self.parent_id = u.get_safe(channel, "parent_id")
-        self.last_pin_timestamp = u.get_safe(channel, "last_pin_timestamp")
+        self.guild_id = None
+        self.position = None
+        self.name = None
+        self.topic = None
+        self.nsfw = None
+        self.last_message_id = None
+        self.bitrate = None
+        self.user_limit = None
+        self.owner_id = None
+        self.application_id = None
+        self.parent_id = None
+        self.last_pin_timestamp = None
 
 
     def __str__(self, indent = 0):
         msg = ''
         for key, value in self.__dict__.items():
-            msg += ('    ' *indent) + str(key) + " : " + str(value) + '\r\n'
+            if key == "permission_overwrites":
+                msg += ('    ' * indent) + "Permission overwrites:\r\n"
+                for it in self.permission_overwrites:
+                    msg += it.__str__(indent + 1) + '\r\n'
+            elif key == "recipients":
+                msg += ('    ' * indent + 1) + "- {}\r\n".format(value.username)
+            else:
+                msg += ('    ' * indent) + "{} : {}\r\n".format(key, value)
         return msg

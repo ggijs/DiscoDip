@@ -6,15 +6,15 @@ class User:
         Cosntructs the user object
     '''
     def __init__(self, data):
-        self.id = data["id"]
-        self.username = data["username"]
-        self.discriminator = data["discriminator"]
-        self.avatar = data["avatar"]
+        self.id = None
+        self.username = None
+        self.discriminator = None
+        self.avatar = None
         
-        self.bot = u.get_safe(data, "bot")
-        self.mfa_enabled = u.get_safe(data, "mfa_enabled")
-        self.verified = u.get_safe(data, "verified")
-        self.email = u.get_safe(data, "email")
+        self.bot = None
+        self.mfa_enabled = None
+        self.verified = None
+        self.email = None
     
     def __str__(self, indent = 0):
         msg = ''

@@ -1,0 +1,3 @@
+#embed is echt aids doe ik later wel...
+
+#link: https://discordapp.com/developers/docs/resources/channel#embed-object

@@ -5,19 +5,13 @@ class Member(user.User):
     '''
         Constructs the member object
     '''
-    def __init__(self, data, guild):
-        super().__init__(data["user"])
-        self.guild = guild
-        self.nickname = u.get_safe(data, "nick")
-        
-        # PARSE ROLES
+    def __init__(self):
+        self.user = None
+        self.nick = None
         self.roles = []
-        for r in data["roles"]:
-            self.roles.append(self.guild.get_role(r))
-
-        self.joined_at = data["joined_at"]
-        self.deaf = data["deaf"]
-        self.mute = data["mute"]
+        self.joined_at = None
+        self.deaf = None
+        self.mute = None
 
     def __str__(self, indent = 0):
         msg = ''
