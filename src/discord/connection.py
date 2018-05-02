@@ -1,4 +1,6 @@
 import json
+import select
+import threading
 import websocket
 
 import discord.exception as ex
@@ -10,7 +12,7 @@ class Connection():
     def __init__(self,token):
         self.dispatch = None
         self.socket_lock = threading.Lock()
-        self.sequence = None
+        self.sequence = 0
         self.socket = None
         self.token = token
         self.ticks_since_hb = 0
@@ -40,7 +42,7 @@ class Connection():
     def update(self):
         self._heartbeat()
 
-        while self.pending_data():
+        while self._pending_data():
             self._pre_dispatch(self.socket.recv())
 
     #########################

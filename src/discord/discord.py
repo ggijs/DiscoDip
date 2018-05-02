@@ -35,11 +35,11 @@ class Discord:
                 m.update()
 
             worktime = time.time() - start
-            start += self.tickspeed
-            if(worktime > self.tickspeed):
+            start += self._tickspeed
+            if(worktime > self._tickspeed):
                 print('Warning! event loop is not keeping up, last update took {}S.'.format(worktime))
                 continue
-            time.sleep(self.tickspeed - worktime)
+            time.sleep(self._tickspeed - worktime)
 
     # Subject to change
     def register_module(self, module):
@@ -52,13 +52,13 @@ class Discord:
     def _dispatch(self, op, t, data):
         if op == 0:
             if t == 'GUILD_CREATE':
-                gld = guild.Guild(data["d"])
-                self.guild[gld.id] = gld
+                gld = guild.Guild(data)
+                self.guilds[gld.id] = gld
 
                 print('parsed guild named {}'.format(gld.name))
                 return
             if t == 'READY':
                 self._connection.session_id = data["session_id"]
-                
                 return
+
         print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, data))
