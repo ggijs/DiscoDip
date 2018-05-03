@@ -24,6 +24,10 @@ class Discord:
         self._connection.dispatch = self._dispatch
         signal.signal(signal.SIGINT, self._ctrlc_handler)
 
+        #debug
+        self.ticker = 0
+        self.runstart = time.time()
+
     ########################
     ##      INTERFACE     ##
     ########################
@@ -44,6 +48,13 @@ class Discord:
                 print('Warning! event loop is not keeping up, last update took {}S.'.format(worktime))
                 continue
             time.sleep(self._tickspeed - worktime)
+
+            #debug
+            self.ticker += 1
+            if(self.ticker > 9000):
+                self.ticker = 0
+                print('** Uptime: {} **'.format(str(datetime.timedelta(seconds=(time.time() - self.runstart)))))
+                
         
         self._connection.disconnect()
         # optional cleanup
