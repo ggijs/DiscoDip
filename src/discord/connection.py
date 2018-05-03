@@ -1,6 +1,8 @@
 import json
+import random
 import select
 import threading
+import time
 import websocket
 
 import discord.exception as ex
@@ -20,11 +22,16 @@ class Connection():
         self.heartbeat_response = True
         self.session_id = None
 
+        self.req_header = {
+            "Authorization" : "Bot {}".format(self.token),
+            "User-Agent" : "DiscoDip (http://wavycolt.com, v0.1)",
+            "Content-Type" : "application/json" }
+
     #########################
     ##      INTERFACE      ##
     #########################
 
-    def connect(self):
+    def connect(self, resume = False):
         url = utility.get_connection_url(self.token)["url"]
         self.socket = websocket.WebSocket()
         self.socket.connect('{}/?v=6&encoding=json'.format(url))
@@ -33,8 +40,13 @@ class Connection():
         hello = json.loads(self.socket.recv())
         self.heartbeat_interval = hello["d"]["heartbeat_interval"]
         print('Heartbeat interval: {}ms'.format(self.heartbeat_interval))
-        
-        self._send(msg_builder.identify(self.token))
+
+        if not resume:
+            self._send(msg_builder.identify(self.token))
+
+    def disconnect(self):
+        msg_builder.presence('', 'offline', False)
+        self.socket.close()
 
     def dispatch(self, op, t, data):
         raise ex.DiscordException('Dispatch callable was not bound.')
@@ -60,6 +72,14 @@ class Connection():
         if event["op"] == 11:
             print('heartbeat ACK:', event)
             self.heartbeat_response = True
+        if event["op"] == 9:
+            self.disconnect()
+            print('[Connection]: Invalid session, takin a nap...')
+            time.sleep(random.randint(2, 5))
+            print('Lets try again!')
+            self.connect()
+        if event ["op"] ==  7:
+            print('[Connection]: Reconnecting succesfull!')
         else:
             self.dispatch(event["op"], event["t"], event["d"])
 
@@ -80,7 +100,10 @@ class Connection():
         return select.select([self.socket], [], [], 0)[0]
 
     def _resume(self):
-        pass
+        self.disconnect()
+        self.connect(resume = True)
+        self._send(msg_builder.resume(self.token,self.session_id,self.sequence))
+        print('[Connecion]: Attemping to restore session')
 
     def _send(self, message):
         with self.socket_lock:

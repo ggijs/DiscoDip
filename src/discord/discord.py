@@ -1,5 +1,6 @@
 import json
 import select
+import signal
 import threading
 import time
 import websocket
@@ -17,9 +18,11 @@ class Discord:
         self.users = {}
         self.modules = {}
         self.dm_channels = {}
+        self._running = True
         self._tickspeed = 0.1 # every 100ms
         self._connection = connection.Connection(token)
         self._connection.dispatch = self._dispatch
+        signal.signal(signal.SIGINT, self._ctrlc_handler)
 
     ########################
     ##      INTERFACE     ##
@@ -29,7 +32,7 @@ class Discord:
         self._connection.connect()
         start = time.time()
 
-        while True:
+        while self._running:
             self._connection.update()
 
             for m in self.modules:
@@ -41,6 +44,9 @@ class Discord:
                 print('Warning! event loop is not keeping up, last update took {}S.'.format(worktime))
                 continue
             time.sleep(self._tickspeed - worktime)
+        
+        self._connection.disconnect()
+        # optional cleanup
 
     # Subject to change
     def register_module(self, module):
@@ -53,10 +59,9 @@ class Discord:
     def _dispatch(self, op, t, data):
         if op == 0:
             if t == 'GUILD_CREATE':
+                print('received guild_create')
                 manager.update_guild(self, data)
-
-                
-                
+                print('parsed guild...')
                 return
             if t == 'READY':
                 self._connection.session_id = data["session_id"]
@@ -64,4 +69,6 @@ class Discord:
 
         print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, data))
 
-        #commit new
+    def _ctrlc_handler(self, signal, frame):
+        self._running = False
+        

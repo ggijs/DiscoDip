@@ -19,7 +19,7 @@ class Emoji():
         msg = ''
         for key,value in self.__dict__.items():
             if key == "user":
-                    msg += "user:\r\n"
+                msg += "user:\r\n"
                 if value:
                     msg += self.user.__str__(indent + 1) + '\r\n'
             else:

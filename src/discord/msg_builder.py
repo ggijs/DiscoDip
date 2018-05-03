@@ -35,13 +35,29 @@ def identify(token):
             "status": "online",
             "afk": False
         }
-        }
+    }
     return payload(2, msg)
     
+def resume(token, session_id, sequence_num):
+    msg = {
+        "token" : token,
+        "session_id" : session_id,
+        "seq" : sequence_num
+    }
+    return payload(6, msg)
     
     
-    
-    
+def presence(game, status, afk):
+    msg = {
+        "since" : None,
+        "game" : {
+            "name" : game,
+            "type" : 0
+        },
+        "status" : status,
+        "afk" : afk
+    }
+    return payload(3, msg)
     
     
     
