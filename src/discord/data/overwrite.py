@@ -9,6 +9,6 @@ class Overwrite:
 
     def __str__(self, indent = 0):
         msg = ''
-        for key, value in self.__dict__.iteritems():
+        for key, value in self.__dict__.items():
             msg += ('    ' * indent) + "{} : {}\r\n".format(key, value)
         return msg

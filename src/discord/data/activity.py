@@ -16,7 +16,7 @@ class Activity:
 
     def __str__(self, indent = 0):
         msg = ''
-        for key, value in self.__dict__.iteritems():
+        for key, value in self.__dict__.items():
             if key == "timestamps":
                 msg += ('    ' * indent) + "Timestamps:\r\n"
                 for it in value:
@@ -64,6 +64,6 @@ class ActivityAsset:
 
     def __str__(self, indent = 0):
         msg = ''
-        for key, value in self.__dict__.iteritems():
+        for key, value in self.__dict__.items():
             msg += ('    ' * indent) + "{} : {}\r\n".format(key, value)
         return msg

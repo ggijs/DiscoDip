@@ -63,3 +63,5 @@ class Discord:
                 return
 
         print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, data))
+
+        #commit new

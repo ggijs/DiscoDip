@@ -31,7 +31,7 @@ def update_guild(discord, data):
     voic_list = data.pop("voice_states", None)
     chan_list = data.pop("channels", None)
 
-    for key, value in data.iteritems():
+    for key, value in data.items():
         guild.__dict__[key] = value
 
     if memb_list:
