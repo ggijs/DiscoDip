@@ -1,5 +1,4 @@
 **/logintoken.py
-**/tokenfile.py
 **/*.pyc
-
+blob*
 /out

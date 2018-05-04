@@ -1,5 +1,6 @@
 import json
 import random
+import requests
 import select
 import threading
 import time
@@ -13,7 +14,6 @@ class Connection():
 
     def __init__(self,token):
         self.dispatch = None
-        self.socket_lock = threading.Lock()
         self.sequence = 0
         self.socket = None
         self.token = token
@@ -21,7 +21,9 @@ class Connection():
         self.heartbeat_interval = None
         self.heartbeat_response = True
         self.session_id = None
-
+        
+        self.request_lock = threading.Lock()
+        self.req_url = 'https://discordapp.com/api'
         self.req_header = {
             "Authorization" : "Bot {}".format(self.token),
             "User-Agent" : "DiscoDip (http://wavycolt.com, v0.1)",
@@ -61,6 +63,33 @@ class Connection():
             else: 
                 self._pre_dispatch(data)
 
+    # API access helpers, throws when rate-limit is exceeded #
+
+    def delete(self, url):
+        with self.request_lock:
+            pass
+
+    def get(self, url):
+        with self.request_lock:
+            if not self._within_ratelimit():
+                raise ex.DiscordException('Rate limit exceeded (spelling pls)')
+
+            response = requests.get("{}{}".format(self.req_url, url), headers = self.req_header)
+            self._parse_response_header(response.headers)
+            return response.text
+
+    def patch(self, url):
+        with self.request_lock:
+            pass
+    
+    def post(self, url):
+        with self.request_lock:
+            pass
+
+    def put(self, url):
+        with self.request_lock:
+            pass
+
     #########################
     ##      INTERNALS      ##
     #########################
@@ -96,6 +125,10 @@ class Connection():
             self.ticks_since_hb = 0
             self.heartbeat_response = False
 
+    def _parse_response_header(self, header):
+        pass
+        
+
     def _pending_data(self):
         return select.select([self.socket], [], [], 0)[0]
 
@@ -106,5 +139,7 @@ class Connection():
         print('[Connecion]: Attemping to restore session')
 
     def _send(self, message):
-        with self.socket_lock:
-            self.socket.send(message)
+        self.socket.send(message)
+
+    def _ratelimit(self):
+        return True
