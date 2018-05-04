@@ -5,11 +5,11 @@ import threading
 import time
 import websocket
 
-import discord.connection as connection
-import discord.utility as utility
+import discord.internals.connection as connection
+import discord.internals.utility as utility
 import discord.data.guild as guild
 import discord.data.manager as manager
-import discord.msg_builder as msg_builder
+import discord.internals.msg_builder as msg_builder
 
 class Discord:
 
