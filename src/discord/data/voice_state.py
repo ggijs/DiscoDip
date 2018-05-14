@@ -1,6 +1,6 @@
+import discord.internals.data as d
 
-
-class VoiceState:
+class VoiceState(d.Data):
     
     def __init__(self):
         self.channel_id = None
@@ -13,9 +13,3 @@ class VoiceState:
         self.suppress = None
         
         self.guild_id = None
-
-    def __str__(self, indent = 0):
-        msg = ''
-        for key, value in self.__dict__.items():
-            msg += ('    ' * indent) + "{} : {}\r\n".format(key, value)
-        return msg

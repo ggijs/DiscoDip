@@ -1,29 +1,13 @@
+import discord.internals.data as d
 
-
-class AuditLogObject:
+class AuditLogObject(d.Data):
     
     def __init__(self):
         self.webhooks = []
         self.users = []
         self.audit_log_entries = []
 
-    def __str__(self, indent = 0):
-        msg = ''
-        
-        msg += ('    ' * indent) + 'Webhooks:\r\n'
-        for it in self.webhooks:
-            msg += it.__str__(indent + 1) + "\r\n"
-        msg += ('    ' * indent) + 'Users:\r\n'
-        for it in self.users:
-            msg += it.__str__(indent + 1) + "\r\n"
-        msg += ('    ' * indent) + 'Audit log entries:\r\n'
-        for it in self.audit_log_entries:
-            msg += it.__str__(indent + 1) + "\r\n"
-
-        return msg
-
-
-class AuditLogEntry:
+class AuditLogEntry(d.Data):
     
     def __init__(self):
         self.target_id = None
@@ -36,23 +20,20 @@ class AuditLogEntry:
         self.options = None
         self.reason = None
 
-    def __str__(self, indent = 0):
-        msg = ''
-        for key, value in self.__dict__.items():
-            if key == "changes":
-                msg += ('    ' * indent) + "Changes:\r\n"
-                for it in value:
-                    msg += it.__str__(indent + 1) + '\r\n'
-            else:
-                msg += ('    ' * indent) + "{} : {}\r\n".format(key, value)
-        return msg
-
-
-# TODO: check output 
-class AuditEntryInfo:
+class AuditEntryInfo(d.Data):
     
     def __init__(self):
-        pass
+        self.delete_member_days = None
+        self.members_removed = None
+        self.channel_id = None
+        self.count = None
+        self.id = None
+        self.type = None
+        self.role_type = None
 
-class AuditLogChange:
-    pass
+class AuditLogChange(d.Data):
+    
+    def __init__(self):
+        self.new_value = None
+        self.old_value = None
+        self.key = None

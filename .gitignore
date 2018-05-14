@@ -2,3 +2,4 @@
 **/*.pyc
 blob*
 /out
+.vscode/

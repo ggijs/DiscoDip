@@ -2,12 +2,13 @@ import discord.data.channel as channel
 import discord.data.emoji as emoji
 import discord.data.member as member
 import discord.data.role as role
+import discord.internals.data as d
 import discord.utility as u
 
 '''
     This represents a guild that the bot is member of, contains all relevant information for this server (i.e. roles, members, emoji's channels etc...)
 '''
-class Guild:
+class Guild(d.Data):
 
     '''
         Constructs the guild object, parsed from a peeled GUILD_CREATE event,
@@ -48,29 +49,3 @@ class Guild:
         self.voice_states = {}
         self.members = {}
         self.channels = {}
-
-    '''
-        to_string with indent formatting for debug output.
-    '''
-    def __str__(self, indent = 0):
-        msg = ''
-        for key, value in self.__dict__.items():
-            if key == 'roles':
-                msg += ('    ' * indent) + 'Roles:\r\n'
-                for r in self.roles.values():
-                    msg += r.__str__(indent + 1) + '\r\n'
-            elif key == 'members':
-                msg += ('    ' * indent) + 'Members:\r\n'
-                for m in self.members.values():
-                    msg += m.__str__(indent + 1) + '\r\n'
-            elif key == 'channels':
-                msg += ('    ' * indent) + 'Channels:\r\n'
-                for c in self.channels.values():
-                    msg += c.__str__(indent + 1) + '\r\n'
-            elif key == 'emojis':
-                msg += ('    ' * indent) + 'Emojis:\r\n'
-                for e in self.emojis.values():
-                    msg += e.__str__(indent + 1) + '\r\n'
-            else:
-                msg += ('    ' * indent) + '{} : {}\r\n'.format(key, value)
-        return msg

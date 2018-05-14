@@ -29,6 +29,8 @@ class Connection():
             "User-Agent" : "DiscoDip (http://wavycolt.com, v0.1)",
             "Content-Type" : "application/json" }
 
+        blaa
+
     #########################
     ##      INTERFACE      ##
     #########################

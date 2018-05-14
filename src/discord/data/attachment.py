@@ -1,6 +1,6 @@
+import discord.internals.data as d
 
-
-class Attachment:
+class Attachment(d.Data):
 
     def __init__(self):
         self.id = None
@@ -10,9 +10,3 @@ class Attachment:
         self.proxy_url = None
         self.height = None
         self.width = None
-
-    def __str__(self, indent = 0):
-        msg = ''
-        for key, value in self.__dict__.items():
-            msg += ('    ' * indent) + "{} : {}\r\n".format(key, value)
-        return msg
