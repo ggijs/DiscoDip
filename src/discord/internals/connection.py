@@ -22,13 +22,13 @@ class Connection():
         self.session_id = None
         
         # rate limit related stuffs
-        self.global_rate_reset = time.time()
+        self.global_rate_reset = self._ms_time()
         self.channel_rate = 0
-        self.channel_rate_reset = time.time()
+        self.channel_rate_reset = self._ms_time()
         self.guilds_rate = 0
-        self.guilds_rate_reset = time.time()
+        self.guilds_rate_reset = self._ms_time()
         self.webhooks_rate = 0
-        self.webhooks_rate_reset = time.time()
+        self.webhooks_rate_reset = self._ms_time()
 
         self.request_lock = threading.Lock()
         self.req_url = 'https://discordapp.com/api'
@@ -105,6 +105,9 @@ class Connection():
         response.raise_for_status()
         return json.loads(response.text)
 
+    def _ms_time(self):
+        return int(time.time() * 1000)
+
     def _pre_dispatch(self, event):
         event = json.loads(event)
 
@@ -167,21 +170,21 @@ class Connection():
         if url.startswith("/channel/"):
             if self.channel_rate > 0:
                 return True
-            if self.channel_rate_reset <= time.time():
+            if self.channel_rate_reset <= self._ms_time():
                 return True
             raise ex.DiscordException('Rate limit exceeded (channel path)')
         
         elif url.startswith("/guilds/"):
             if self.guilds_rate > 0:
                 return True
-            if self.guilds_rate_reset <= time.time():
+            if self.guilds_rate_reset <= self._ms_time():
                 return True
             raise ex.DiscordException('Rate limit exceeded (guilds path)')
 
         elif url.startswith("/webhooks/"):
             if self.webhooks_rate > 0:
                 return True
-            if self.webhooks_rate_reset <= time.time():
+            if self.webhooks_rate_reset <= self._ms_time():
                 return True
             raise ex.DiscordException('Rate limit exceeded (webhooks path)')
         return True
