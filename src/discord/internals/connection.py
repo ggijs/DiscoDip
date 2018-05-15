@@ -7,7 +7,6 @@ import time
 import websocket
 
 import discord.exception as ex
-import discord.utility as utility
 import discord.msg_builder as msg_builder
 
 class Connection():
@@ -22,6 +21,15 @@ class Connection():
         self.heartbeat_response = True
         self.session_id = None
         
+        # rate limit related stuffs
+        self.global_rate_reset = time.time()
+        self.channel_rate = 0
+        self.channel_rate_reset = time.time()
+        self.guilds_rate = 0
+        self.guilds_rate_reset = time.time()
+        self.webhooks_rate = 0
+        self.webhooks_rate_reset = time.time()
+
         self.request_lock = threading.Lock()
         self.req_url = 'https://discordapp.com/api'
         self.req_header = {
@@ -29,14 +37,12 @@ class Connection():
             "User-Agent" : "DiscoDip (http://wavycolt.com, v0.1)",
             "Content-Type" : "application/json" }
 
-        blaa
-
     #########################
     ##      INTERFACE      ##
     #########################
 
     def connect(self, resume = False):
-        url = utility.get_connection_url(self.token)["url"]
+        url = self.get_connection_url(self.token)["url"]
         self.socket = websocket.WebSocket()
         self.socket.connect('{}/?v=6&encoding=json'.format(url))
         
@@ -73,11 +79,9 @@ class Connection():
 
     def get(self, url):
         with self.request_lock:
-            if not self._within_ratelimit():
-                raise ex.DiscordException('Rate limit exceeded (spelling pls)')
-
+            self._check_ratelimit(url):
             response = requests.get("{}{}".format(self.req_url, url), headers = self.req_header)
-            self._parse_response_header(response.headers)
+            self._parse_response_header(response.headers, url)
             return response.text
 
     def patch(self, url):
@@ -95,6 +99,12 @@ class Connection():
     #########################
     ##      INTERNALS      ##
     #########################
+     def _get_connection_url(token):
+        headers = {"Authorization" : "Bot {}".format(token)}
+        response = requests.get("https://discordapp.com/api/gateway/bot", headers=headers)
+        response.raise_for_status()
+        return json.loads(response.text)
+
     def _pre_dispatch(self, event):
         event = json.loads(event)
 
@@ -127,9 +137,18 @@ class Connection():
             self.ticks_since_hb = 0
             self.heartbeat_response = False
 
-    def _parse_response_header(self, header):
-        pass
+    def _parse_response_header(self, header, url):
+        if url.startswith("/channel/"):
+            self.channel_rate = header["X-RateLimit-Remaining"]
+            self.channel_rate_reset = header["X-RateLimit-Reset"]
         
+        elif url.startswith("/guilds/"):
+            self.guilds_rate = header["X-RateLimit-Remaining"]
+            self.guilds_rate_reset = header["X-RateLimit-Reset"]
+
+        elif url.startswith("/webhooks/"):
+            self.webhooks_rate = header["X-RateLimit-Remaining"]
+            self.webhooks_rate_reset = header["X-RateLimit-Reset"]
 
     def _pending_data(self):
         return select.select([self.socket], [], [], 0)[0]
@@ -143,5 +162,26 @@ class Connection():
     def _send(self, message):
         self.socket.send(message)
 
-    def _ratelimit(self):
+    #Expirimental function
+    def _within_ratelimit(self, url):
+        if url.startswith("/channel/"):
+            if self.channel_rate > 0:
+                return True
+            if self.channel_rate_reset <= time.time():
+                return True
+            raise ex.DiscordException('Rate limit exceeded (channel path)')
+        
+        elif url.startswith("/guilds/"):
+            if self.guilds_rate > 0:
+                return True
+            if self.guilds_rate_reset <= time.time():
+                return True
+            raise ex.DiscordException('Rate limit exceeded (guilds path)')
+
+        elif url.startswith("/webhooks/"):
+            if self.webhooks_rate > 0:
+                return True
+            if self.webhooks_rate_reset <= time.time():
+                return True
+            raise ex.DiscordException('Rate limit exceeded (webhooks path)')
         return True

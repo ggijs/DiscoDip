@@ -8,7 +8,7 @@ class Data:
 
     def _print(indent = 0):
         for key, val in self.__dict__.items():
-            __printer(key, val, ind)
+            __printer(key, val, indent)
         print("\r\n")
 
     def __printer(key, value, indent = 0):
@@ -18,10 +18,17 @@ class Data:
             print(indent * " ")
         
         if isinstance(value, Data):
+            print("\r\n")
             value._print(indent + 1)
         elif isinstance(value, list):
-            for value in list:
-                __printer(None, value, indent + 1)
+            print("\r\n")
+            for v in value:
+                __printer(None, v, indent + 1)
+                print("\r\n")
+        elif isinstance(value, dict):
+            print("\r\n")
+            for k, v in value:
+                __printer(k, v, indent + 1)
         else:
             print("{}\r\n".format(value))
 
