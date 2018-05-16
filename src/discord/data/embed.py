@@ -48,7 +48,7 @@ class EmbedProvider(d.Data):
 
 class EmbedAuthor(d.Data):
 
-    def __init__(d.Data):
+    def __init__(self):
         self.name = None
         self.url = None
         self.icon_url = None

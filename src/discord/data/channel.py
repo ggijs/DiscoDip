@@ -1,5 +1,4 @@
 import discord.internals.data as d
-import discord.utility as u
 
 class Channel(d.Data):
     

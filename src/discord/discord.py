@@ -6,9 +6,8 @@ import time
 import websocket
 
 import discord.internals.connection as connection
-import discord.internals.utility as utility
 import discord.data.guild as guild
-import discord.data.manager as manager
+import discord.internals.data_manager as manager
 import discord.internals.msg_builder as msg_builder
 
 class Discord:

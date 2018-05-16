@@ -1,6 +1,5 @@
 import discord.data.user as user
 import discord.internals.data as d
-import discord.utility as u
 
 class Emoji(d.Data):
 

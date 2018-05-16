@@ -9,7 +9,7 @@ class Invite(d.Data):
         self.approximate_presence_count = None
         self.approximate_member_count = None
 
-class InviteMetadata(d.data):
+class InviteMetadata(d.Data):
     
     def __init__(self):
         self.inviter = None

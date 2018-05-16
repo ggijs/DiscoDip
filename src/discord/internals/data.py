@@ -1,3 +1,4 @@
+import discord.internals.exception as ex
 '''
 Data baseclass
 
@@ -6,32 +7,39 @@ Contains methods for merging data into this class, and debug printing.
 
 class Data:
 
-    def _print(indent = 0):
+    def _print(self, indent = 0):
         for key, val in self.__dict__.items():
-            __printer(key, val, indent)
+            self.__printer(key, val, indent)
         print("\r\n")
 
-    def __printer(key, value, indent = 0):
+    def __printer(self, key, value, indent = 0):
         if key:
-            print("{}{}: ".format(indent * " ", key))
+            print("{}{}: ".format(indent * " ", key), end="")
         else:
-            print(indent * " ")
+            print(indent * " ", end="")
         
         if isinstance(value, Data):
-            print("\r\n")
-            value._print(indent + 1)
+            value._print(indent + 4)
         elif isinstance(value, list):
-            print("\r\n")
+            if len(value) > 0: print()
             for v in value:
-                __printer(None, v, indent + 1)
-                print("\r\n")
+                self.__printer(None, v, indent + 4)
+            if len(value) == 0: print()
         elif isinstance(value, dict):
-            print("\r\n")
+            if len(value) > 0: print()
             for k, v in value:
-                __printer(k, v, indent + 1)
+                self.__printer(k, v, indent + 4)
+            if len(value) == 0: print()
         else:
-            print("{}\r\n".format(value))
+            print("{}".format(value))
 
-    def _merge(data):
-        for key, value in self.data.items():
-            self.__dict__[key] = value
+    def _update(self, data):
+        if isinstance(data, dict):    
+            for key, value in data.items():
+                self.__dict__[key] = value
+            return
+        if isinstance(data, Data):
+            for key, value in data.__dict__.items():
+                self.__dict__[key] = value
+            return
+        raise ex.DiscordException("Attempted to update on non-dict, non-Data")

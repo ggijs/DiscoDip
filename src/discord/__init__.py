@@ -1,2 +1,2 @@
 
-__all__ = ["discord", "utility"]
+__all__ = ["discord"]

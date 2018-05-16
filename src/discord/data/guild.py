@@ -3,7 +3,6 @@ import discord.data.emoji as emoji
 import discord.data.member as member
 import discord.data.role as role
 import discord.internals.data as d
-import discord.utility as u
 
 '''
     This represents a guild that the bot is member of, contains all relevant information for this server (i.e. roles, members, emoji's channels etc...)

@@ -6,8 +6,8 @@ import threading
 import time
 import websocket
 
-import discord.exception as ex
-import discord.msg_builder as msg_builder
+import discord.internals.exception as ex
+import discord.internals.msg_builder as msg_builder
 
 class Connection():
 
@@ -42,7 +42,7 @@ class Connection():
     #########################
 
     def connect(self, resume = False):
-        url = self.get_connection_url(self.token)["url"]
+        url = self._get_connection_url(self.token)["url"]
         self.socket = websocket.WebSocket()
         self.socket.connect('{}/?v=6&encoding=json'.format(url))
         
@@ -79,7 +79,7 @@ class Connection():
 
     def get(self, url):
         with self.request_lock:
-            self._check_ratelimit(url):
+            self._check_ratelimit(url)
             response = requests.get("{}{}".format(self.req_url, url), headers = self.req_header)
             self._parse_response_header(response.headers, url)
             return response.text
@@ -99,7 +99,7 @@ class Connection():
     #########################
     ##      INTERNALS      ##
     #########################
-     def _get_connection_url(token):
+    def _get_connection_url(self, token):
         headers = {"Authorization" : "Bot {}".format(token)}
         response = requests.get("https://discordapp.com/api/gateway/bot", headers=headers)
         response.raise_for_status()
