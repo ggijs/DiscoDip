@@ -9,8 +9,9 @@ class Emoji(d.Data):
         self.name = None
 
         #Optional
-        self.roles = None
         self.require_colons = None
         self.managed = None
         self.animated = None
         self.user = None
+
+        self.roles = []

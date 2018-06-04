@@ -70,7 +70,8 @@ class Discord:
         if op == 0:
             if t == 'GUILD_CREATE':
                 print('received guild_create')
-                manager.update_guild(self, data)
+                guild = manager.update_guild(self, data)
+                guild._print()
                 print('parsed guild...')
                 return
             if t == 'READY':

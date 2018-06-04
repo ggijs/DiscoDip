@@ -19,11 +19,11 @@ class Data:
             print(indent * " ", end="")
         
         if isinstance(value, Data):
+            print()
             value._print(indent + 4)
         elif isinstance(value, list):
-            if len(value) > 0: print()
             for v in value:
-                self.__printer(None, v, indent + 4)
+                self.__printer(None, v, indent)
             if len(value) == 0: print()
         elif isinstance(value, dict):
             if len(value) > 0: print()

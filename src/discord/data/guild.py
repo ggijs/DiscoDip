@@ -26,7 +26,6 @@ class Guild(d.Data):
         self.verification_level = None
         self.default_message_notifications = None
         self.explicit_content_filter = None
-        self.features = None
         self.mfa_level = None
         self.application_id = None
         self.system_channel_id = None
@@ -43,8 +42,28 @@ class Guild(d.Data):
         self.unavailable = None
         self.member_count = None
 
-        self.roles = {}
-        self.emojis = {}
-        self.voice_states = {}
-        self.members = {}
-        self.channels = {}
+        self.roles = []
+        self.emojis = []
+        self.features = []
+        self.voice_states = [] #
+        self.members = []
+        self.channels = []
+        self.presences = [] #
+
+    def get_channel(self, id):
+        for chan in self.channels:
+            if chan.id == id:
+                return chan
+        return None
+
+    def get_emoji(self, id):
+        pass
+    
+    def get_role(self, id):
+        for rol in self.roles:
+            if rol.id == id:
+                return rol
+        return None
+
+    def get_member(self, id):
+        pass

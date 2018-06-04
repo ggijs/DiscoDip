@@ -66,10 +66,31 @@ def update_audit_log(discord, data):
 #        CHANNEL        #
 #########################
 def create_channel(discord, data):
-    pass
+    data["permission_overwrites"] = _convert_list(discord, create_overwrite, "permission_overwrites", data)
+    data["recipients"] = _convert_list(discord, find_user, "recipients", data)
+
+    c = channel.Channel()
+    c._update(data)
+    return c
 
 def update_channel(discord, data):
-    pass
+    chan = create_channel(discord, data)
+    
+    if not chan.guild_id:
+        if chan.id in discord.dm_channels:
+            discord.dm_channels[chan.id]._update(chan)
+            return discord.dm_channels[chan.id]
+        else:
+            discord.dm_channels[chan.id] = chan
+            return chan
+
+    #else
+    gld = discord.guilds[chan.guild_id]
+    gch = gld.get_channel(chan.id)
+    gch._update(chan)
+    return gch
+
+        
 
 ############################
 #        CONNECTION        #
@@ -94,24 +115,36 @@ def update_embed(discord, data):
 #######################
 #        EMOJI        #
 #######################
-def create_emoji(discord, data):
-    pass
+def create_emoji(discord, guild, data):
+    e = emoji.Emoji()
 
-def update_emoji(discord, data):
-    pass
+    if "roles" in data:
+        data["roles"] = [guild.get_role(rid) for rid in data["roles"]]
+    else:
+        data["roles"] = []
+
+    e._update(data)
+    return e
 
 #######################
 #        GUILD        #
 #######################
 def create_guild(discord, data):
-    data["roles"] = [create_role(discord, role) for role in data["roles"]]
-    data["emojis"] = [create_emoji(discord, emoji) for emoji in data["emojis"]]
+    g = guild.Guild()
+    g.roles = [create_role(discord, role) for role in data["roles"]]
+    g.emoji = [create_emoji(discord, g, emoji) for emoji in data["emojis"]]
+    if "members" in data:
+        g.members = [create_member(discord, g, mem) for mem in data["members"]]
+        del data["members"]
+    
+    del data["roles"]
+    del data["emojis"]
+    
     data["voice_states"] = _convert_list(discord, create_voice_state, "voice_states", data)
-    data["members"] = _convert_list(discord, create_member, "members", data)
     data["channels"] = _convert_list(discord, create_channel, "channels", data)
     data["presences"] = _convert_list(discord, create_presence, "presences", data)
 
-    g = guild.Guild()
+    # voice_states & presences will be parsed into member objects.
     g._update(data)
     return g
 
@@ -119,12 +152,10 @@ def update_guild(discord, data):
     id = data["id"]
     if id in discord.guilds:
         discord.guilds[id]._update(create_guild(discord, data))
-        guild._print()
         return discord.guilds[id]
     else:
         guild = create_guild(discord, data)
         discord.guilds[guild.id] = guild
-        guild._print()
         return guild
 
 #############################
@@ -150,10 +181,15 @@ def update_invite(discord, data):
 ########################
 #        MEMBER        #
 ########################
-def create_member(discord, data):
-    pass
+def create_member(discord, guild, data):
+    data["roles"] = [guild.get_role(rol) for rol in data["roles"]]
+    data["user"] = find_user(discord, data["user"])
+    m = member.Member()
+    m._update(data)
+    return m
+    
 
-def update_member(discord, data):
+def update_member(discord, guild, data):
     pass
 
 #########################
@@ -209,10 +245,24 @@ def update_reaction(discord, data):
 ######################
 
 def create_role(discord, data):
-    pass
+    r = role.Role()
+    r._update(data)
+    return r
 
+# Mind! this does not take a role dict, but a 
+# role update dict. { guild_id, role }
 def update_role(discord, data):
-    pass
+    gld = discord.guild[data["guild_id"]]
+    
+    new = create_role(data["role"])
+    old = gld.get_role(new.id)
+
+    if not old:
+        discord.roles.append(new)
+        return new
+    
+    old._update(new)
+    return old
 
 ######################
 #        USER        #
@@ -226,11 +276,18 @@ def update_user(discord, data):
     id = data["id"]
     if id in discord.users:
         discord.users[id]._update(data)
-        return discord.users[id] #?
+        return discord.users[id]
     else:
         user = create_user(discord, data)
         discord.users[user.id] = user
         return user
+
+def find_user(discord, data):
+    id = data["id"]
+    if id in discord.users:
+        return discord.users[id]
+    else:
+        return update_user(discord, data)
 
 #############################
 #        VOICE STATE        #

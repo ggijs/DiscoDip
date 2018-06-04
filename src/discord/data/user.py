@@ -5,7 +5,7 @@ class User(d.Data):
     '''
         Cosntructs the user object
     '''
-    def __init__(self, data):
+    def __init__(self):
         self.id = None
         self.username = None
         self.discriminator = None

@@ -6,9 +6,7 @@ class Channel(d.Data):
         #Guaranteed
         self.id = None
         self.type = None
-        self.permission_overwrites = []
-        self.recipients = []
-
+        
         #Optional
         self.guild_id = None
         self.position = None
@@ -22,3 +20,6 @@ class Channel(d.Data):
         self.application_id = None
         self.parent_id = None
         self.last_pin_timestamp = None
+
+        self.permission_overwrites = []
+        self.recipients = []
