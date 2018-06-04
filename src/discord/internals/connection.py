@@ -55,7 +55,7 @@ class Connection():
             self._send(msg_builder.identify(self.token))
 
     def disconnect(self):
-        msg_builder.presence('', 'offline', False)
+        self._send(msg_builder.presence('', 'offline', False))
         self.socket.close()
 
     def dispatch(self, op, t, data):

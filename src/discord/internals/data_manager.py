@@ -116,9 +116,16 @@ def create_guild(discord, data):
     return g
 
 def update_guild(discord, data):
-    # TODO: Bind original values  if guild already exists
-    guild = create_guild(discord, data)
-    guild._print()
+    id = data["id"]
+    if id in discord.guilds:
+        discord.guilds[id]._update(create_guild(discord, data))
+        guild._print()
+        return discord.guilds[id]
+    else:
+        guild = create_guild(discord, data)
+        discord.guilds[guild.id] = guild
+        guild._print()
+        return guild
 
 #############################
 #        INTEGRATION        #
@@ -203,18 +210,27 @@ def update_reaction(discord, data):
 
 def create_role(discord, data):
     pass
-    
+
 def update_role(discord, data):
     pass
-    
+
 ######################
 #        USER        #
 ######################
 def create_user(discord, data):
-    pass
+    u = user.User()
+    u._update(data)
+    return u
 
 def update_user(discord, data):
-    pass
+    id = data["id"]
+    if id in discord.users:
+        discord.users[id]._update(data)
+        return discord.users[id] #?
+    else:
+        user = create_user(discord, data)
+        discord.users[user.id] = user
+        return user
 
 #############################
 #        VOICE STATE        #
