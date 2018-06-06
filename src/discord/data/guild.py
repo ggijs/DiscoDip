@@ -45,10 +45,41 @@ class Guild(d.Data):
         self.roles = []
         self.emojis = []
         self.features = []
-        self.voice_states = [] #
+        #self.voice_states = [] #
         self.members = []
         self.channels = []
-        self.presences = [] #
+        #self.presences = [] #
+
+    # Loads guild info from the data map.
+    def _load(self, discord, data, extra = None):
+        # load roles
+        self.roles = [None] * len(data["roles"])
+        for it in range(0, len(data["roles"])):
+            self.roles[it] = role.Role()
+            self.roles[it]._load(discord, data["roles"][it])
+
+        # manage emojis
+        self.emojis = [None] * len(data["emojis"])
+        for it in range(0, len(data["emojis"])):
+            self.emojis[it] = emoji.Emoji()
+            self.emojis[it]._load(discord, data["emojis"][it], self)
+
+        # manage features
+        # manage members
+        # manage channels
+
+        # update voice_states into members
+        # update presences into members
+
+        del data["roles"]
+        del data["emojis"]
+        del data["features"]
+        del data["members"]
+        del data["voice_states"]
+        del data["presences"]
+        del data["channels"]
+
+        self._update(data)
 
     def get_channel(self, id):
         for chan in self.channels:

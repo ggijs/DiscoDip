@@ -42,3 +42,6 @@ class Data:
                 self.__dict__[key] = value
             return
         raise ex.DiscordException("Attempted to update on non-dict, non-Data")
+
+    def _load(self, discord, data, extra = None):
+        self._update(data)

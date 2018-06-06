@@ -7,7 +7,8 @@ import websocket
 
 import discord.internals.connection as connection
 import discord.data.guild as guild
-import discord.internals.data_manager as manager
+import discord.data.user as user
+import discord.internals.gateway as gateway
 import discord.internals.msg_builder as msg_builder
 
 class Discord:
@@ -68,19 +69,32 @@ class Discord:
 
     def _dispatch(self, op, t, data):
         if op == 0:
-            if t == 'GUILD_CREATE':
-                print('received guild_create')
-                guild = manager.update_guild(self, data)
-                guild._print()
-                print(type(guild.emoji[0]))
-                print('parsed guild...')
-                return
             if t == 'READY':
                 self._connection.session_id = data["session_id"]
                 return
-
-        print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, data))
+            elif t == 'GUILD_CREATE':
+                print('received guild_create')
+                guild = gateway.consume(self, t, data)
+                guild._print()
+                print('Guild stuff complete')
+            else:
+                print(gateway.consume(self, t, data))
+                print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, data))
 
     def _ctrlc_handler(self, signal, frame):
         self._running = False
+
+
+
+    # Returns user handle, registers user if it is
+    # not registered yet.
+    def _user_by_data(self, data):
+        id = data["id"]
+        if id in self.users:
+            return self.users[id]
+        
+        u = user.User()
+        u._load(data)
+        self.users[id] = u
+        return u
         

@@ -113,16 +113,17 @@ class Connection():
 
         if event["s"] and event["s"] > self.sequence:
             self.sequence = event["s"]
+        
         if event["op"] == 11:
             print('heartbeat ACK:', event)
             self.heartbeat_response = True
-        if event["op"] == 9:
+        elif event["op"] == 9:
             self.disconnect()
             print('[Connection]: Invalid session, takin a nap...')
             time.sleep(random.randint(2, 5))
             print('Lets try again!')
             self.connect()
-        if event ["op"] ==  7:
+        elif event ["op"] ==  7:
             print('[Connection]: Reconnecting succesfull!')
         else:
             self.dispatch(event["op"], event["t"], event["d"])
