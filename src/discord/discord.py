@@ -72,6 +72,7 @@ class Discord:
                 print('received guild_create')
                 guild = manager.update_guild(self, data)
                 guild._print()
+                print(type(guild.emoji[0]))
                 print('parsed guild...')
                 return
             if t == 'READY':

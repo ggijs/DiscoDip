@@ -90,8 +90,6 @@ def update_channel(discord, data):
     gch._update(chan)
     return gch
 
-        
-
 ############################
 #        CONNECTION        #
 ############################
