@@ -40,10 +40,8 @@ def __guild_create(discord, event):
     if id in discord.guilds:
         print("*** WARNING: CREATING ALREADY EXISTING GUILD... ***")
 
-    g = guild.Guild()
-    g._load(discord, event)
-    discord.guilds["id"] = g
-    return g
+    discord.guilds["id"] = guild.Guild(discord, event)
+    return discord.guilds["id"]
 
 def __guild_update(discord, event):
     pass

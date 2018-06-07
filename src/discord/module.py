@@ -1,8 +1,4 @@
 
-
-
-
-
 class Module:
 
     def channel_create(self, discord, event):

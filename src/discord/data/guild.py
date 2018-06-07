@@ -13,23 +13,7 @@ class Guild(d.Data):
         Constructs the guild object, parsed from a peeled GUILD_CREATE event,
         autofills all optional and not-present data (may be None)
     '''
-    def __init__(self):
-        # Guaranteed values
-        self.id = None
-        self.name = None
-        self.icon = None
-        self.splash = None
-        self.owner_id = None
-        self.region = None
-        self.afk_channel_id = None
-        self.afk_timeout = None
-        self.verification_level = None
-        self.default_message_notifications = None
-        self.explicit_content_filter = None
-        self.mfa_level = None
-        self.application_id = None
-        self.system_channel_id = None
-
+    def __init__(self, discord, data):
         # Optional values
         self.owner = None
         self.permissions = None
@@ -42,27 +26,15 @@ class Guild(d.Data):
         self.unavailable = None
         self.member_count = None
 
-        self.roles = []
-        self.emojis = []
-        self.features = []
-        #self.voice_states = [] #
-        self.members = []
-        self.channels = []
-        #self.presences = [] #
-
-    # Loads guild info from the data map.
-    def _load(self, discord, data, extra = None):
         # load roles
         self.roles = [None] * len(data["roles"])
         for it in range(0, len(data["roles"])):
-            self.roles[it] = role.Role()
-            self.roles[it]._load(discord, data["roles"][it])
+            self.roles[it] = role.Role(data["roles"][it])
 
         # manage emojis
         self.emojis = [None] * len(data["emojis"])
         for it in range(0, len(data["emojis"])):
-            self.emojis[it] = emoji.Emoji()
-            self.emojis[it]._load(discord, data["emojis"][it], self)
+            self.emojis[it] = emoji.Emoji(discord, self, data["emojis"][it])
 
         # manage features
         # manage members

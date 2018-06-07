@@ -3,20 +3,14 @@ import discord.internals.data as d
 
 class Emoji(d.Data):
 
-    def __init__(self):
-        #Guaranteed
-        self.id = None
-        self.name = None
-
-        #Optional
+    def __init__(self, discord, guild, data):
+        #Optional values
+        self.roles = []
+        self.user = None
         self.require_colons = None
         self.managed = None
         self.animated = None
-        self.user = None
 
-        self.roles = []
-
-    def _load(self, discord, data, guild):
         if "roles" in data:
             self.roles = [None] * len(data["roles"])
             for it in range(0, len(data["roles"])):
@@ -27,4 +21,4 @@ class Emoji(d.Data):
             self.user = discord._user_by_data(data["user"])
             del data["user"]
 
-        super()._load(discord, data, guild)
+        self._update(data)

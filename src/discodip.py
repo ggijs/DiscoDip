@@ -11,7 +11,7 @@ import discord.data.user as user
 import discord.internals.gateway as gateway
 import discord.internals.msg_builder as msg_builder
 
-class Discord:
+class Discodip:
 
     def __init__(self, token):
         self.guilds = {}

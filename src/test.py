@@ -1,5 +1,5 @@
-from discord import *
+import discodip as dip
 import logintoken as tokens
 
-connection = discord.Discord(tokens.get_token())
+connection = dip.Discodip(tokens.get_token())
 connection.run()
