@@ -79,7 +79,7 @@ class Connection():
 
     def get(self, url):
         with self.request_lock:
-            self._check_ratelimit(url)
+            self._within_ratelimit(url)
             response = requests.get("{}{}".format(self.req_url, url), headers = self.req_header)
             self._parse_response_header(response.headers, url)
             return response.text
@@ -88,9 +88,16 @@ class Connection():
         with self.request_lock:
             pass
     
-    def post(self, url):
+    def post(self, url, content):
         with self.request_lock:
-            pass
+            self._within_ratelimit(url)
+
+            response = requests.post("{}{}".format(self.req_url, url), headers = self.req_header, data=json.dumps(content))
+            self._parse_response_header(response.headers, url)
+            print("Post headers:")
+            print(response.headers)
+            print("Post text:")
+            print(response.text)
 
     def put(self, url):
         with self.request_lock:
@@ -145,6 +152,7 @@ class Connection():
         if url.startswith("/channel/"):
             self.channel_rate = header["X-RateLimit-Remaining"]
             self.channel_rate_reset = header["X-RateLimit-Reset"]
+            print("Channel limit/reset: {}/{}".format(self.channel_rate, self.channel_rate_reset))
         
         elif url.startswith("/guilds/"):
             self.guilds_rate = header["X-RateLimit-Remaining"]

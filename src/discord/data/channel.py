@@ -1,5 +1,7 @@
 import discord.internals.data as d
 
+import discord.data.emoji as emoji
+
 '''
     Some information in the channel data is unlinked
     Because this information may not be directly available for
@@ -48,7 +50,11 @@ class Overwrite(d.Data):
 
 class Reaction(d.Data):
 
-    def __init__(self):
-        self.count = None
-        self.me = None
-        self.emoji = None
+    def __init__(self, guild, data):
+        self.count = data["count"]
+        self.me = data["me"]
+        
+        if not guild:
+            self.emoji = emoji.Emoji(None, None, {"id": None, "name": data["emoji"]["name"]})
+        else:
+            guild.get_emoji(data["emoji"]["id"])

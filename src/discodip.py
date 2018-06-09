@@ -1,3 +1,4 @@
+import datetime
 import json
 import select
 import signal
@@ -16,8 +17,8 @@ class Discodip:
     def __init__(self, token):
         self.guilds = {}
         self.users = {}
-        self.modules = {}
         self.dm_channels = {}
+        self.modules = []
         self._running = True
         self._tickspeed = 0.1 # every 100ms
         self._connection = connection.Connection(token)
@@ -79,12 +80,16 @@ class Discodip:
                 print('Guild stuff complete')
             else:
                 print(gateway.consume(self, t, data))
-                print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, data))
+                print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, json.dumps(data, indent=4)))
 
     def _ctrlc_handler(self, signal, frame):
         self._running = False
 
-
+    def _guild_by_cid(self, id):
+        for guild in self.guilds.values():
+            if guild.get_channel(id):
+                return guild
+        return None
 
     # Returns user handle, registers user if it is
     # not registered yet.

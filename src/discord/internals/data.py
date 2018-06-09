@@ -10,9 +10,11 @@ class Data:
     def _print(self, indent = 0):
         for key, val in self.__dict__.items():
             self.__printer(key, val, indent)
-        print("\r\n")
+        #print("\r\n")
 
     def __printer(self, key, value, indent = 0):
+        if key == "guild": return #ignore this cuz recursion is a B.
+
         if key:
             print("{}{}: ".format(indent * " ", key), end="")
         else:
@@ -22,7 +24,7 @@ class Data:
             print()
             value._print(indent + 4)
         elif isinstance(value, list):
-            if len(value) > 0 and not isinstance(value[0], Data): print()
+            if len(value) == 0 or not isinstance(value[0], Data): print()
             for v in value:
                 if isinstance(v, Data):
                     self.__printer(None, v, indent)

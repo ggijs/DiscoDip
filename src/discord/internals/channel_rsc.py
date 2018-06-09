@@ -4,7 +4,7 @@ import requests
 import discord.data.channel as channel
 
 def get_channel(discord, channel_id):
-    return discord.connection.get("/channel/{}".format(channel_id))
+    return discord._connection.get("/channels/{}".format(channel_id))
 
 def modify_channel(discord, channel_id, channel_update):
     pass
@@ -19,7 +19,8 @@ def get_channel_message(discord, channel_id, message_id):
     pass
 
 def create_message(discord, channel_id, message):
-    pass
+    msg = {"content": message}
+    discord._connection.post("/channels/{}/messages".format(channel_id), msg)
 
 def create_reaction(discord, channel_id, message_id, emoji):
     pass

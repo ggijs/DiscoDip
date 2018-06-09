@@ -80,7 +80,11 @@ def __guild_role_delete(discord, event):
     pass
 
 def __message_create(discord, event):
-    pass
+    msg = message.Message(discord, event)
+    
+    for module in discord.modules:
+        module.message_received(msg)
+
 
 def __message_update(discord, event):
     pass
@@ -126,6 +130,7 @@ def __webhooks_update(discord, event):
 __switch = \
 {
     "GUILD_CREATE" : __guild_create,
+    "MESSAGE_CREATE": __message_create,
 }
 
 def __default_action(discord, t):

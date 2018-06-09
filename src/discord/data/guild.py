@@ -85,7 +85,11 @@ class Guild(d.Data):
         return None
 
     def get_emoji(self, id):
-        pass
+        for emo in self.emojis:
+            if emo.id == id:
+                return emo
+        # returns a default emoji object (unlisted default emoji)
+        return emoji.Emoji(None, self, {"id": None, "name" : id})
     
     def get_role(self, id):
         for rol in self.roles:
