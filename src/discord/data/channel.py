@@ -1,14 +1,18 @@
 import discord.internals.data as d
 
+'''
+    Some information in the channel data is unlinked
+    Because this information may not be directly available for
+    the discord client, and barely ever relevant for the users.
+    The request functions can however be used to resolve this data.
+'''
 class Channel(d.Data):
     
-    def __init__(self):
-        #Guaranteed
-        self.id = None
-        self.type = None
-        
+    def __init__(self, discord, guild, data):
         #Optional
-        self.guild_id = None
+        if "guild_id" in data:
+            del data["guild_id"]
+
         self.position = None
         self.name = None
         self.topic = None
@@ -20,6 +24,31 @@ class Channel(d.Data):
         self.application_id = None
         self.parent_id = None
         self.last_pin_timestamp = None
-
+        self.recipients = None
         self.permission_overwrites = []
-        self.recipients = []
+
+        if "permission_overwrites" in data:
+            self.permission_overwrites = [None] * len(data["permission_overwrites"])
+            for it in range(0, len(data["permission_overwrites"])):
+                self.permission_overwrites[it] = Overwrite(guild, data["permission_overwrites"][it])
+            del data["permission_overwrites"]
+
+        if "recipients" in data:
+            self.recipients = [None] * len(data["recipients"])
+            for it in range(0, len(data["recipients"])):
+                self.recipients[it] = discord._user_by_data(data["recipients"][it])
+            del data["recipients"]
+        
+        self._update(data)
+
+class Overwrite(d.Data):
+
+    def __init__(self, guild, data):
+        self._update(data)
+
+class Reaction(d.Data):
+
+    def __init__(self):
+        self.count = None
+        self.me = None
+        self.emoji = None

@@ -1,4 +1,3 @@
-import discord.data.activity as activity
 import discord.data.attachment as attachment
 import discord.data.audit_log as audit_log
 import discord.data.channel as channel
@@ -10,9 +9,7 @@ import discord.data.integration as integration
 import discord.data.invite as invite
 import discord.data.member as member
 import discord.data.message as message
-import discord.data.overwrite as overwrite
 import discord.data.presence as presence
-import discord.data.reaction as reaction
 import discord.data.role as role
 import discord.data.user as user
 import discord.data.voice_state as voice_state

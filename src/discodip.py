@@ -45,7 +45,7 @@ class Discodip:
             worktime = time.time() - start
             start += self._tickspeed
             if(worktime > self._tickspeed):
-                print('Warning! event loop is not keeping up, last update took {}S.'.format(worktime))
+                print('Warning! event loop is not keeping up, is now {}S behind.'.format(worktime))
                 continue
             time.sleep(self._tickspeed - worktime)
 
@@ -93,8 +93,6 @@ class Discodip:
         if id in self.users:
             return self.users[id]
         
-        u = user.User()
-        u._load(data)
-        self.users[id] = u
-        return u
+        self.users[id] = user.User(data)
+        return self.users[id]
         
