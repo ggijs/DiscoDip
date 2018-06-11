@@ -11,11 +11,13 @@ import discord.data.emoji as emoji
 '''
 class Channel(d.Data):
     
-    def __init__(self, discord, guild, data):
+    def __init__(self, discord, data):
         self.ratelimit = rl.Ratelimit()
-        
+        self.guild = None
+
         #Optional
         if "guild_id" in data:
+            self.guild = discord.guilds[data["guild_id"]]
             del data["guild_id"]
 
         self.position = None
@@ -35,7 +37,7 @@ class Channel(d.Data):
         if "permission_overwrites" in data:
             self.permission_overwrites = [None] * len(data["permission_overwrites"])
             for it in range(0, len(data["permission_overwrites"])):
-                self.permission_overwrites[it] = Overwrite(guild, data["permission_overwrites"][it])
+                self.permission_overwrites[it] = Overwrite(data["permission_overwrites"][it])
             del data["permission_overwrites"]
 
         if "recipients" in data:
@@ -48,7 +50,7 @@ class Channel(d.Data):
 
 class Overwrite(d.Data):
 
-    def __init__(self, guild, data):
+    def __init__(self, data):
         self._update(data)
 
 class Reaction(d.Data):

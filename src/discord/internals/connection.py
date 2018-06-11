@@ -24,17 +24,8 @@ class Connection():
         self.session_id = None
         
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers = 1)
-
-        # rate limit related stuffs
-        self.global_rate_reset = self._ms_time()
-        self.channel_rate = 0
-        self.channel_rate_reset = self._ms_time()
-        self.guilds_rate = 0
-        self.guilds_rate_reset = self._ms_time()
-        self.webhooks_rate = 0
-        self.webhooks_rate_reset = self._ms_time()
-
         self.request_lock = threading.Lock()
+        
         self.req_url = 'https://discordapp.com/api'
         self.req_header = {
             "Authorization" : "Bot {}".format(self.token),
@@ -56,10 +47,10 @@ class Connection():
         print('Heartbeat interval: {}ms'.format(self.heartbeat_interval))
 
         if not resume:
-            self._send(msg_builder.identify(self.token))
+            self._gateway_send(msg_builder.identify(self.token))
 
     def disconnect(self):
-        self._send(msg_builder.presence('', 'offline', False))
+        self._gateway_send(msg_builder.presence('', 'offline', False))
         self.socket.close()
 
     def dispatch(self, op, t, data):
@@ -167,25 +158,10 @@ class Connection():
             else:
                 msg = msg_builder.heartbeat(self.sequence)
                 print(msg)
-                self._send(msg)
+                self._gateway_send(msg)
             
             self.ticks_since_hb = 0
             self.heartbeat_response = False
-
-    def _parse_response_header(self, header, url):
-        if url.startswith("/channels/"):
-            self.channel_rate = int(header["X-RateLimit-Remaining"])
-            self.channel_rate_reset = int(header["X-RateLimit-Reset"])
-            print("Channel limit/reset: {}/{}".format(self.channel_rate, self.channel_rate_reset))
-            print("~Now: {}".format(int(time.time())))
-        
-        elif url.startswith("/guilds/"):
-            self.guilds_rate = int(header["X-RateLimit-Remaining"])
-            self.guilds_rate_reset = int(header["X-RateLimit-Reset"])
-
-        elif url.startswith("/webhooks/"):
-            self.webhooks_rate = int(header["X-RateLimit-Remaining"])
-            self.webhooks_rate_reset = int(header["X-RateLimit-Reset"])
 
     def _pending_data(self):
         return select.select([self.socket], [], [], 0)[0]
@@ -193,32 +169,8 @@ class Connection():
     def _resume(self):
         self.disconnect()
         self.connect(resume = True)
-        self._send(msg_builder.resume(self.token,self.session_id,self.sequence))
+        self._gateway_send(msg_builder.resume(self.token,self.session_id,self.sequence))
         print('[Connecion]: Attemping to restore session')
 
-    def _send(self, message):
+    def _gateway_send(self, message):
         self.socket.send(message)
-
-    #Expirimental function
-    def _within_ratelimit(self, url):
-        if url.startswith("/channels/"):
-            if self.channel_rate > 0:
-                return True
-            if self.channel_rate_reset <= self._ms_time():
-                return True
-            raise ex.DiscordException('Rate limit exceeded (channel path)')
-        
-        elif url.startswith("/guilds/"):
-            if self.guilds_rate > 0:
-                return True
-            if self.guilds_rate_reset <= self._ms_time():
-                return True
-            raise ex.DiscordException('Rate limit exceeded (guilds path)')
-
-        elif url.startswith("/webhooks/"):
-            if self.webhooks_rate > 0:
-                return True
-            if self.webhooks_rate_reset <= self._ms_time():
-                return True
-            raise ex.DiscordException('Rate limit exceeded (webhooks path)')
-        return True

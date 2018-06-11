@@ -23,13 +23,43 @@ import json
 '''
 
 def __channel_create(discord, event):
-    pass
+    chan = channel.Channel(discord, event)
+    if chan.guild:
+        chan.guild.channels.append(chan)
+    else:
+        discord.dm_channels[chan.id] = chan
 
+    for module in discord.modules:
+        module.channel_created(chan)
+
+# consider:
+# module.channel_updated(old, new).
+# Write a generic function that finds differences between objects.
 def __channel_update(discord, event):
-    pass
+    chan = channel.Channel(discord, event)
+    if chan.guild:
+        chan.guild.get_channel(chan.id)._update(chan)
+    else:
+        discord.dm_channels[chan.id]._update(chan)
+
+    for module in discord.modules:
+        module.channel_updated(chan)
 
 def __channel_delete(discord, event):
-    pass
+    channel_id = event["id"]
+    guild_id = event.get("guild_id")
+    chan = None
+
+    if guild_id:
+        guild = discord.guilds[guild_id]
+        chan = guild.get_channel(channel_id)
+        guild.channels.remove(chan)
+    else:
+        chan = discord.dm_channels[channel_id]
+        del discord.dm_channels[channel_id]
+    
+    for module in discord.modules:
+        module.channel_deleted(chan)
 
 def __channel_pins_update(discord, event):
     pass
@@ -39,10 +69,10 @@ def __guild_create(discord, event):
     if id in discord.guilds:
         print("*** WARNING: CREATING ALREADY EXISTING GUILD... ***")
 
-    discord.guilds["id"] = guild.Guild(discord, event)
+    discord.guilds[id] = guild.Guild(discord, event)
     
     for module in discord.modules:
-        module.guild_created(discord.guilds["id"])
+        module.guild_created(discord.guilds[id])
 
 def __guild_update(discord, event):
     pass
@@ -133,8 +163,11 @@ def __webhooks_update(discord, event):
 # This dict dispatches the event to the correct function
 __switch = \
 {
-    "GUILD_CREATE" : __guild_create,
-    "MESSAGE_CREATE": __message_create,
+    "CHANNEL_CREATE"    :   __channel_create,
+    "CHANNEL_UPDATE"    :   __channel_update,
+    "CHANNEL_DELETE"    :   __channel_delete,
+    "GUILD_CREATE"      :   __guild_create,
+    "MESSAGE_CREATE"    :   __message_create,
 }
 
 def __default_action(discord, t):

@@ -77,7 +77,7 @@ class Discodip:
             if t == 'READY':
                 self._connection.session_id = data["session_id"]
             else:
-                print(gateway.consume(self, t, data))
+                gateway.consume(self, t, data)
 
     def _ctrlc_handler(self, signal, frame):
         self._running = False

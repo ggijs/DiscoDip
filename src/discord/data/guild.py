@@ -62,7 +62,7 @@ class Guild(d.Data):
         if "channels" in data:
             self.channels = [None] * len(data["channels"])
             for it in range(0, len(data["channels"])):
-                self.channels[it] = channel.Channel(discord, self, data["channels"][it])
+                self.channels[it] = channel.Channel(discord, data["channels"][it])
             del data["channels"]
 
         # update voice_states into members (?)

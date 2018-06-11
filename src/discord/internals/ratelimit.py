@@ -21,3 +21,9 @@ class Ratelimit:
     def update(self, header):
         self.rate_reset = int(header["X-RateLimit-Reset"])
         self.rate_limit = int(header["X-RateLimit-Remaining"])
+
+    def __repr__(self):
+        return "Limit / Reset in: {} / {}S".format(self.rate_limit, self.rate_reset - int(time.time()))
+    
+    def __str__(self):
+        return self.__repr__()
