@@ -1,4 +1,5 @@
 import discord.internals.data as d
+import discord.internals.ratelimit as rl
 
 import discord.data.emoji as emoji
 
@@ -11,6 +12,8 @@ import discord.data.emoji as emoji
 class Channel(d.Data):
     
     def __init__(self, discord, guild, data):
+        self.ratelimit = rl.Ratelimit()
+        
         #Optional
         if "guild_id" in data:
             del data["guild_id"]

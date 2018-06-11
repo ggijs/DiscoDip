@@ -1,4 +1,6 @@
+import concurrent.futures
 import json
+import multiprocessing
 import random
 import requests
 import select
@@ -21,6 +23,8 @@ class Connection():
         self.heartbeat_response = True
         self.session_id = None
         
+        self.executor = concurrent.futures.ThreadPoolExecutor(max_workers = 1)
+
         # rate limit related stuffs
         self.global_rate_reset = self._ms_time()
         self.channel_rate = 0
@@ -73,33 +77,53 @@ class Connection():
 
     # API access helpers, throws when rate-limit is exceeded #
 
-    def delete(self, url):
+    # DELETE
+    def delete(self, url, ratelimit = None):
+        return self.executor.submit(self.__impl_delete, url, ratelimit)
+
+    def __impl_delete(self, url, ratelimit = None):
         with self.request_lock:
             pass
 
-    def get(self, url):
+    # GET
+    def get(self, url, ratelimit = None):
+        return self.executor.submit(self.__impl_get, url, ratelimit)
+
+    def __impl_get(self, url, ratelimit = None):
         with self.request_lock:
-            self._within_ratelimit(url)
+            if ratelimit and not ratelimit.allowed():
+                raise ex.DiscordException("Rate limit exceeded for '{}'".format(url))
+            
             response = requests.get("{}{}".format(self.req_url, url), headers = self.req_header)
-            self._parse_response_header(response.headers, url)
+            if ratelimit: ratelimit.update(response.headers)
             return response.text
 
-    def patch(self, url):
+    # PATCH
+    def patch(self, url, ratelimit = None):
+        return self.executor.submit(self.__impl_patch, url, ratelimit)
+
+    def __impl_patch(self, url, ratelimit = None):
         with self.request_lock:
             pass
-    
-    def post(self, url, content):
+
+    # POST
+    def post(self, url, content, ratelimit = None):
+        return self.executor.submit(self.__impl_post, url, content, ratelimit)
+
+    def __impl_post(self, url, content, ratelimit = None):
         with self.request_lock:
-            self._within_ratelimit(url)
+            if ratelimit and not ratelimit.allowed():
+                raise ex.DiscordException("Rate limit exceeded for '{}'".format(url))
 
             response = requests.post("{}{}".format(self.req_url, url), headers = self.req_header, data=json.dumps(content))
-            self._parse_response_header(response.headers, url)
-            print("Post headers:")
-            print(response.headers)
-            print("Post text:")
-            print(response.text)
+            if ratelimit: ratelimit.update(response.headers)
+            return response.text
 
-    def put(self, url):
+    # PUT
+    def put(self, url, ratelimit = None):
+        return self.executor.submit(self.__impl_put, url, ratelimit)
+
+    def __impl_put(self, url, ratelimit = None):
         with self.request_lock:
             pass
 
@@ -149,18 +173,19 @@ class Connection():
             self.heartbeat_response = False
 
     def _parse_response_header(self, header, url):
-        if url.startswith("/channel/"):
-            self.channel_rate = header["X-RateLimit-Remaining"]
-            self.channel_rate_reset = header["X-RateLimit-Reset"]
+        if url.startswith("/channels/"):
+            self.channel_rate = int(header["X-RateLimit-Remaining"])
+            self.channel_rate_reset = int(header["X-RateLimit-Reset"])
             print("Channel limit/reset: {}/{}".format(self.channel_rate, self.channel_rate_reset))
+            print("~Now: {}".format(int(time.time())))
         
         elif url.startswith("/guilds/"):
-            self.guilds_rate = header["X-RateLimit-Remaining"]
-            self.guilds_rate_reset = header["X-RateLimit-Reset"]
+            self.guilds_rate = int(header["X-RateLimit-Remaining"])
+            self.guilds_rate_reset = int(header["X-RateLimit-Reset"])
 
         elif url.startswith("/webhooks/"):
-            self.webhooks_rate = header["X-RateLimit-Remaining"]
-            self.webhooks_rate_reset = header["X-RateLimit-Reset"]
+            self.webhooks_rate = int(header["X-RateLimit-Remaining"])
+            self.webhooks_rate_reset = int(header["X-RateLimit-Reset"])
 
     def _pending_data(self):
         return select.select([self.socket], [], [], 0)[0]
@@ -176,7 +201,7 @@ class Connection():
 
     #Expirimental function
     def _within_ratelimit(self, url):
-        if url.startswith("/channel/"):
+        if url.startswith("/channels/"):
             if self.channel_rate > 0:
                 return True
             if self.channel_rate_reset <= self._ms_time():

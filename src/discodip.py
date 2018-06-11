@@ -9,6 +9,7 @@ import websocket
 import discord.internals.connection as connection
 import discord.data.guild as guild
 import discord.data.user as user
+import discord.internals.channel_rsc as crsc
 import discord.internals.gateway as gateway
 import discord.internals.msg_builder as msg_builder
 
@@ -62,7 +63,10 @@ class Discodip:
 
     # Subject to change
     def register_module(self, module):
-        pass
+        self.modules.append(module)
+
+    def send_message(self, channel, message):
+        crsc.create_message(self, channel, message)
 
     ########################
     ##      INTERNALS     ##
@@ -72,15 +76,8 @@ class Discodip:
         if op == 0:
             if t == 'READY':
                 self._connection.session_id = data["session_id"]
-                return
-            elif t == 'GUILD_CREATE':
-                print('received guild_create')
-                guild = gateway.consume(self, t, data)
-                guild._print()
-                print('Guild stuff complete')
             else:
                 print(gateway.consume(self, t, data))
-                print('\n', '{}, {}: \r\n{}\r\n'.format(op, t, json.dumps(data, indent=4)))
 
     def _ctrlc_handler(self, signal, frame):
         self._running = False
@@ -90,7 +87,7 @@ class Discodip:
             if guild.get_channel(id):
                 return guild
         return None
-
+    
     # Returns user handle, registers user if it is
     # not registered yet.
     def _user_by_data(self, data):

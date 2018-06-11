@@ -1,9 +1,9 @@
 import json
 
-def list_guild_emojis(discord, guild_id):
+def list_guild_emojis(discord, guild_id): # toss?
     pass
 
-def get_guild_emoji(discord, guild_id, emoji_id):
+def get_guild_emoji(discord, guild_id, emoji_id): # toss?
     pass
 
 def create_guild_emoji(discord, guild_id, new_emoji):

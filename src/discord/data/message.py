@@ -6,6 +6,11 @@ class Message(d.Data):
 
     def __init__(self, discord, data):
         self.guild = discord._guild_by_cid(data["channel_id"])
+        if self.guild:
+            self.channel = self.guild.get_channel(data["channel_id"])
+        else:
+            self.channel = discord.dm_channels[data["channel_id"]]
+        del data["channel_id"]
 
         self.author = None
         self.nonce = None

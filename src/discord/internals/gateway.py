@@ -15,6 +15,8 @@ import discord.data.user as user
 import discord.data.voice_state as voice_state
 import discord.data.webhook as webhook
 
+import json
+
 '''
     Handles (most) gateway events & updates
     Not handled here: Hello, Ready, Resumed, Invalid Session.
@@ -38,7 +40,9 @@ def __guild_create(discord, event):
         print("*** WARNING: CREATING ALREADY EXISTING GUILD... ***")
 
     discord.guilds["id"] = guild.Guild(discord, event)
-    return discord.guilds["id"]
+    
+    for module in discord.modules:
+        module.guild_created(discord.guilds["id"])
 
 def __guild_update(discord, event):
     pass
@@ -140,4 +144,6 @@ def consume(discord, t, data):
     func = __switch.get(t)
     if func:
         return func(discord, data)
+
+    print('\n', '{}: \r\n{}\r\n'.format(t, json.dumps(data, indent=4)))
     return __default_action(discord, t)

@@ -5,6 +5,7 @@ import discord.data.presence as presence
 import discord.data.role as role
 import discord.data.voice_state as voice_state
 import discord.internals.data as d
+import discord.internals.ratelimit as rl
 
 '''
     This represents a guild that the bot is member of, contains all relevant information for this server (i.e. roles, members, emoji's channels etc...)
@@ -16,6 +17,8 @@ class Guild(d.Data):
         autofills all optional and not-present data (may be None)
     '''
     def __init__(self, discord, data):
+        self.ratelimit = rl.Ratelimit()
+        
         # Optional values
         self.owner = None
         self.permissions = None

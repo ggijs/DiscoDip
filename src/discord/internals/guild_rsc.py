@@ -1,7 +1,7 @@
 import json
 import requests
 
-def get_guild(discord, guild_id):
+def get_guild(discord, guild_id): # toss?
     pass
 
 def modify_guild(discord, guild_id, guild_update):
@@ -10,7 +10,7 @@ def modify_guild(discord, guild_id, guild_update):
 def delete_guild(discord, guild_id):
     pass
 
-def get_guild_channels(discord, guild_id):
+def get_guild_channels(discord, guild_id): # toss?
     pass
 
 def create_guild_channel(discord, guild_id, channel_params):
@@ -19,7 +19,7 @@ def create_guild_channel(discord, guild_id, channel_params):
 def modify_guild_channel_positions(discord, guild_id, channel_update):
     pass
 
-def get_guild_member(discord, guild_id, user_id):
+def get_guild_member(discord, guild_id, user_id): # toss?
     pass
 
 def list_guild_members(discord, guild_id, query_string_params = None):
@@ -43,10 +43,10 @@ def remove_guild_member_role(discord, guild_id, user_id, role_id):
 def remove_guild_member(discord, guild_id, user_id):
     pass
 
-def get_guild_bans(discord, guild_id):
+def get_guild_bans(discord, guild_id): # toss?
     pass
 
-def get_guild_ban(discord, guild_id, user_id):
+def get_guild_ban(discord, guild_id, user_id): # toss?
     pass
 
 def create_guild_ban(discord, guild_id, user_id, ban_params):
@@ -55,7 +55,7 @@ def create_guild_ban(discord, guild_id, user_id, ban_params):
 def remove_guild_ban(discord, guild_id, user_id):
     pass
 
-def get_guild_roles(discord, guild_id):
+def get_guild_roles(discord, guild_id): # toss?
     pass
 
 def create_guild_role(discord, guild_id, role_params = None):
@@ -70,19 +70,19 @@ def modify_guild_role(discord, guild_id, role_id, role_update):
 def delete_guild_role(discord, guild_id, role_id):
     pass
 
-def get_guild_prune_count(discord, guild_id, prune_query):
+def get_guild_prune_count(discord, guild_id, prune_query): # toss?
     pass
 
 def begin_guild_prune(discord, guild_id, prune_query):
     pass
 
-def get_guild_voice_regions(discord, guild_id):
+def get_guild_voice_regions(discord, guild_id): # toss?
     pass
 
-def get_guild_invites(discord, guild_id):
+def get_guild_invites(discord, guild_id): # toss?
     pass
 
-def get_guild_integrations(discord, guild_id):
+def get_guild_integrations(discord, guild_id): # toss?
     pass
 
 def create_guild_integration(discord, guild_id, integration_reference):
@@ -97,7 +97,7 @@ def delete_guild_integration(discord, guild_id, integration_id):
 def sync_guild_integration(discord, guild_id, integration_id):
     pass
 
-def get_guild_embed(discord, guild_id):
+def get_guild_embed(discord, guild_id): # toss?
     pass
 
 def modify_guild_embed(discord, guild_id, guild_embed):

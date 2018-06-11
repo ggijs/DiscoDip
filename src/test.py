@@ -11,12 +11,14 @@ class Thing(m.Module):
     def __init__(self, discodip):
         self.discodip = discodip
 
+    def guild_created(self, event):
+        self.guild = event
+
     def message_received(self, message):
         print("Module received msg: '{}'".format(message.content))
         
         if message.content == "!ping":
-            crsc.create_message(self.discodip, message.channel_id, "Pong!")
+            crsc.create_message(self.discodip, message.channel, "Pong!")
 
-
-connection.modules.append(Thing(connection))
+connection.register_module(Thing(connection))
 connection.run()

@@ -3,7 +3,7 @@ import requests
 
 import discord.data.channel as channel
 
-def get_channel(discord, channel_id):
+def get_channel(discord, channel_id): # toss?
     return discord._connection.get("/channels/{}".format(channel_id))
 
 def modify_channel(discord, channel_id, channel_update):
@@ -15,12 +15,12 @@ def delete_channel(discord, channel_id):
 def get_channel_messages(discord, channel_id, query = None, limit = None):
     pass
 
-def get_channel_message(discord, channel_id, message_id):
+def get_channel_message(discord, channel_id, message_id): # toss?
     pass
 
-def create_message(discord, channel_id, message):
+def create_message(discord, channel, message):
     msg = {"content": message}
-    discord._connection.post("/channels/{}/messages".format(channel_id), msg)
+    discord._connection.post("/channels/{}/messages".format(channel.id), msg, channel.ratelimit)
 
 def create_reaction(discord, channel_id, message_id, emoji):
     pass
@@ -49,7 +49,7 @@ def bulk_delete_messages(discord, channel_id, message_ids):
 def edit_channel_permissions(discord, channel_id, overwrite_id, overwrite):
     pass
 
-def get_channel_invites(discord, channel_id):
+def get_channel_invites(discord, channel_id): # toss?
     pass
 
 def create_channel_invite(discord, channel_id, invite_parameters):
@@ -61,7 +61,7 @@ def delete_channel_permission(discord, channel_id, overwrite_id):
 def trigger_typing_indicator(discord, channel_id):
     pass
 
-def get_pinned_messages(discord, channel_id):
+def get_pinned_messages(discord, channel_id): 
     pass
 
 def add_pinned_channel_message(discord, channel_id, message_id):
