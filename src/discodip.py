@@ -61,9 +61,11 @@ class Discodip:
         self._connection.disconnect()
         # optional cleanup
 
+
     # Subject to change
     def register_module(self, module):
         self.modules.append(module)
+
 
     def send_message(self, channel, message):
         crsc.create_message(self, channel, message)
@@ -79,14 +81,17 @@ class Discodip:
             else:
                 gateway.consume(self, t, data)
 
+
     def _ctrlc_handler(self, signal, frame):
         self._running = False
+
 
     def _guild_by_cid(self, id):
         for guild in self.guilds.values():
             if guild.get_channel(id):
                 return guild
         return None
+    
     
     # Returns user handle, registers user if it is
     # not registered yet.

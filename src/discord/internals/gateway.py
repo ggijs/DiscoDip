@@ -20,6 +20,14 @@ import json
 '''
     Handles (most) gateway events & updates
     Not handled here: Hello, Ready, Resumed, Invalid Session.
+
+    !!!!
+    Do default None values overwrite relevant stuff when updating?
+    --> Make it possible to generate incomplete objects
+        for complex objects like guild, role, channel etc...
+
+    For *_update functions, should the events work like:
+    *_updated(old, new), with a posibility to generate a diff?
 '''
 
 def __channel_create(discord, event):
@@ -32,9 +40,7 @@ def __channel_create(discord, event):
     for module in discord.modules:
         module.channel_created(chan)
 
-# consider:
-# module.channel_updated(old, new).
-# Write a generic function that finds differences between objects.
+
 def __channel_update(discord, event):
     chan = channel.Channel(discord, event)
     if chan.guild:
@@ -44,6 +50,7 @@ def __channel_update(discord, event):
 
     for module in discord.modules:
         module.channel_updated(chan)
+
 
 def __channel_delete(discord, event):
     channel_id = event["id"]
@@ -61,8 +68,10 @@ def __channel_delete(discord, event):
     for module in discord.modules:
         module.channel_deleted(chan)
 
+
 def __channel_pins_update(discord, event):
     pass
+
 
 def __guild_create(discord, event):
     id = event["id"]
@@ -74,44 +83,58 @@ def __guild_create(discord, event):
     for module in discord.modules:
         module.guild_created(discord.guilds[id])
 
+
 def __guild_update(discord, event):
     pass
+
 
 def __guild_delete(discord, event):
     pass
 
+
 def __guild_ban_add(discord, event):
     pass
+
 
 def __guild_ban_remove(discord, event):
     pass
 
+
 def __guild_emojis_update(discord, event):
     pass
+
 
 def __guild_integrations_update(discord, event):
     pass
 
+
 def __guild_member_add(discord, event):
     pass
+
 
 def __guild_member_remove(discord, event):
     pass
 
+
 def __guild_member_update(discord, event):
     pass
+
 
 def __guild_members_chunk(discord, event):
     pass
 
+
 def __guild_role_create(discord, event):
     pass
+
 
 def __guild_role_update(discord, event):
     pass
 
+
 def __guild_role_delete(discord, event):
     pass
+
 
 def __message_create(discord, event):
     msg = message.Message(discord, event)
@@ -123,35 +146,46 @@ def __message_create(discord, event):
 def __message_update(discord, event):
     pass
 
+
 def __message_delete(discord, event):
     pass
+
 
 def __message_delete_bulk(discord, event):
     pass
 
+
 def __message_reaction_add(discord, event):
     pass
+
 
 def __message_reaction_remove(discord, event):
     pass
 
+
 def __message_reaction_remove_all(discord, event):
     pass
+
 
 def __presence_update(discord, event):
     pass
 
+
 def __typing_start(discord, event):
     pass
+
 
 def __user_update(discord, event):
     pass
 
+
 def __voice_state_update(discord, event):
     pass
 
+
 def __voice_server_update(discord, event):
     pass
+
 
 def __webhooks_update(discord, event):
     pass
@@ -170,8 +204,10 @@ __switch = \
     "MESSAGE_CREATE"    :   __message_create,
 }
 
+
 def __default_action(discord, t):
     print("*** UNMANAGED EVENT TYPE: {} ***".format(t))
+
 
 def consume(discord, t, data):
     func = __switch.get(t)

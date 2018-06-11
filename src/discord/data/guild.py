@@ -81,11 +81,13 @@ class Guild(d.Data):
 
         self._update(data)
 
+
     def get_channel(self, id):
         for chan in self.channels:
             if chan.id == id:
                 return chan
         return None
+
 
     def get_emoji(self, id):
         for emo in self.emojis:
@@ -94,11 +96,13 @@ class Guild(d.Data):
         # returns a default emoji object (unlisted default emoji)
         return emoji.Emoji(None, self, {"id": None, "name" : id})
     
+
     def get_role(self, id):
         for rol in self.roles:
             if rol.id == id:
                 return rol
         return None
+
 
     def get_member(self, id):
         for mem in self.members:

@@ -43,4 +43,4 @@ class Data:
             for key, value in data.__dict__.items():
                 self.__dict__[key] = value
             return
-        raise ex.DiscordException("Attempted to update on non-dict, non-Data")
+        raise ex.DiscordException("Attempted to update from non-dict, non-Data")
